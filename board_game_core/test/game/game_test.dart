@@ -30,13 +30,13 @@ void main() {
 
     test('Move piece', () {
       final newBoard = board.move("a", "b").unwrap();
-      expect(newBoard.get("a").runtimeType, Err<String, BoardError>);
+      expect(newBoard.get("a").unwrap(), null);
       expect(newBoard.get("b").unwrap(), "x");
     });
 
     test('Remove piece', () {
       final newBoard = board.remove("a").unwrap();
-      expect(newBoard.get("a").runtimeType, Err<String, BoardError>);
+      expect(newBoard.get("a").unwrap(), null);
     });
 
     test('Get all pieces', () {

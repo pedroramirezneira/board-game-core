@@ -30,11 +30,11 @@ class Board<K, V, S> {
     return Ok(Board(initial: map, size: size));
   }
 
-  Result<V, BoardError> get(K key) {
-    if (!_map.containsKey(key) || _map[key] == null) {
+  Result<V?, BoardError> get(K key) {
+    if (!_map.containsKey(key)) {
       return Err(BoardError(_noPieceAtPositionError));
     }
-    return Ok(_map[key] as V);
+    return Ok(_map[key]);
   }
 
   Iterator<Pair<K, V?>> getAll() {

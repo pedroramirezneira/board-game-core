@@ -29,7 +29,7 @@ void main() {
   group('Movement provider tests', () {
     test('Valid move', () {
       final result = testMovementProvider.execute(testGame, "a", "b");
-      expect(result.unwrap().get("a").runtimeType, Err<int, BoardError>);
+      expect(result.unwrap().get("a").unwrap(), null);
       expect(result.unwrap().get("b").unwrap(), 1);
     });
 

@@ -1,5 +1,4 @@
 import 'package:board_game_core/board_game_core.dart';
-import 'package:board_game_core/src/turn_manager/turn_manager.dart';
 
 class Game<K, V, S> {
   final String currentPlayer;
@@ -25,11 +24,13 @@ class Game<K, V, S> {
     if (movement is Err) {
       return Err(GameError(movement.unwrapErr().message));
     }
-    final violation = _ruleProvider.validate(this);
+    final state = copyWith(board: movement.unwrap(), previousState: this);
+    final violation = _ruleProvider.validate(state);
     if (violation != null) {
       return Err(GameError(violation.message));
     }
-    final result = _turnManager.onTurnEnd(this);
+    final nextPlayer = _turnManager.getNextPlayer(state);
+    final result = state.copyWith(currentPlayer: nextPlayer);
     return Ok(result);
   }
 

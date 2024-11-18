@@ -17,7 +17,7 @@ void main() {
 
     test('Move piece', () {
       final result = testBoard.move("a", "b").unwrap();
-      expect(result.get("a").runtimeType, Err<int, BoardError>);
+      expect(result.get("a").unwrap(), null);
       expect(result.get("b").unwrap(), 1);
     });
 
