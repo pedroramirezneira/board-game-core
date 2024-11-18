@@ -1,0 +1,16 @@
+{
+  "use_default": true,
+  "board_size": "8, 8",
+  "movements": [
+    {
+      "name": "special",
+      "vectors": ["straight", "diagonal", "knight"]
+    }
+  ],
+  "pieces": [
+    {
+      "type": "special",
+      "movements": ["special"]
+    }
+  ]
+}
