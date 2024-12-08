@@ -1,5 +1,6 @@
 import 'package:board_game_core/board_game_core.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
+import 'package:chess_core/src/chess_movement/standard_movement.dart';
 import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 import 'package:chess_core/src/util/default_movements.dart';
@@ -31,9 +32,10 @@ class ChessMovementProvider
         ? pieceMovements
         : pieceMovements!.map((movement) => movement.rotate180()).toList();
     final movement = playerMovements?.firstWhere(
-        (movement) => movement.validate(game, from, to),
-        orElse: () => _NullMovement());
-    if (movement == null || movement is _NullMovement) {
+      (movement) => movement.validate(game, from, to),
+      orElse: () => _nullMovement,
+    );
+    if (movement == null || identical(movement, _nullMovement)) {
       return Err(MovementProviderError(_invalidMovementError));
     }
     final result = board.move(from, to);
@@ -44,15 +46,4 @@ class ChessMovementProvider
   }
 }
 
-class _NullMovement implements ChessMovement {
-  const _NullMovement();
-  @override
-  bool validate(Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
-    return false;
-  }
-
-  @override
-  ChessMovement rotate180() {
-    return this;
-  }
-}
+final _nullMovement = StandardMovement(vector: Vector2(x: 0, y: 0));

@@ -9,6 +9,10 @@ class Vector2 {
     return Vector2(x: x + other.x, y: y + other.y);
   }
 
+  Vector2 operator *(int other) {
+    return Vector2(x: x * other, y: y * other);
+  }
+
   Vector2 operator -(Vector2 other) {
     return Vector2(x: x - other.x, y: y - other.y);
   }

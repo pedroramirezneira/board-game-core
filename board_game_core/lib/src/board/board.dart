@@ -11,11 +11,14 @@ const _noPieceAtPositionError = "No piece exists at the specified position.";
 class Board<K, V, S> {
   final Map<K, V?> _map;
   final S size;
+  final String Function(Board<K, V, S> board)? _toString;
 
   const Board({
     required Map<K, V?> initial,
     required this.size,
-  }) : _map = initial;
+    String Function(Board<K, V, S> board)? toString,
+  })  : _map = initial,
+        _toString = toString;
 
   Result<Board<K, V, S>, BoardError> move(K from, K to) {
     if (!_map.containsKey(from) || !_map.containsKey(to)) {
@@ -27,7 +30,7 @@ class Board<K, V, S> {
     final map = Map<K, V?>.from(_map)
       ..[from] = null
       ..[to] = _map[from];
-    return Ok(Board(initial: map, size: size));
+    return Ok(Board(initial: map, size: size, toString: _toString));
   }
 
   Result<V?, BoardError> get(K key) {
@@ -47,11 +50,13 @@ class Board<K, V, S> {
     }
     final map = Map<K, V?>.from(_map);
     map[position] = null;
-    return Ok(Board(initial: map, size: size));
+    return Ok(Board(initial: map, size: size, toString: _toString));
   }
 
   @override
   String toString() {
-    return "Board(map: $_map, size: $size)";
+    return _toString != null
+        ? _toString(this)
+        : "Board(map: $_map, size: $size)";
   }
 }

@@ -6,7 +6,7 @@ import 'package:chess_core/src/chess_movement/standard_movement.dart';
 import 'package:chess_core/src/data/vector2.dart';
 import 'package:chess_core/src/util/default_vectors.dart';
 
-const Map<String, List<ChessMovement>> defaultMovements = {
+final Map<String, List<ChessMovement>> defaultMovements = {
   "king": [...straight, ...diagonal]
       .map((e) => StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1))
       .toList(),

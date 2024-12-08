@@ -4,7 +4,7 @@ import 'package:chess_core/src/chess_violation/chess_violation.dart';
 import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
-class Check implements ChessRule {
+class StaleMate implements ChessRule {
   @override
   ChessViolation? validate(Game<Vector2, Piece, Vector2> game) {
     final nextPlayer = game.turnManager.getNextPlayer(game);
@@ -15,18 +15,14 @@ class Check implements ChessRule {
       final iterator2 = state.board.getAll();
       while (iterator2.moveNext() != false) {
         final to = iterator2.current.first;
-        if (_handleMove(from, to, state)) return const CheckViolation();
+        if (_handleMove(from, to, state)) return null;
       }
     }
-    return null;
+    return StaleMateViolation();
   }
 }
 
 bool _handleMove(Vector2 from, Vector2 to, Game<Vector2, Piece, Vector2> game) {
-  final piece = game.board.get(to);
-  if (piece is Err || piece.unwrap()?.type != "king") {
-    return false;
-  }
   final movement = game.movementProvider.execute(game, from, to);
   if (movement is Err) {
     return false;

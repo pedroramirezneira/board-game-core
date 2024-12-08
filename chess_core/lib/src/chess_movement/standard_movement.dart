@@ -11,17 +11,44 @@ class StandardMovement implements ChessMovement {
         _limit = limit;
   @override
   bool validate(Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
+    final lambda = _getLambda(to, from);
+    if (lambda == null) {
+      return false;
+    }
+    return _isPathClear(game.board, from, to, lambda);
+  }
+
+  int? _getLambda(Vector2 to, Vector2 from) {
+    if (_vector.x == 0 && _vector.y == 0) {
+      return null;
+    }
     final direction = to - from;
     final lambda =
         _vector.x == 0 ? direction.y / _vector.y : direction.x / _vector.x;
     if (lambda < 0) {
-      return false;
+      return null;
     }
     if (_vector.y * lambda != direction.y) {
-      return false;
+      return null;
     }
     if (_limit != null && lambda > _limit) {
-      return false;
+      return null;
+    }
+    return lambda.round();
+  }
+
+  bool _isPathClear(
+    Board<Vector2, Piece, Vector2> board,
+    Vector2 from,
+    Vector2 to,
+    int lambda,
+  ) {
+    for (int i = 1; i < lambda; i++) {
+      final position = from + _vector * i;
+      final piece = board.get(position);
+      if (piece is Ok && piece.unwrap() != null) {
+        return false;
+      }
     }
     return true;
   }
