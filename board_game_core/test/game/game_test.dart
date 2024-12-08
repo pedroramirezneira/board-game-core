@@ -2,6 +2,7 @@ import 'package:board_game_core/board_game_core.dart';
 import 'package:test/test.dart';
 
 import '../board/board_test.dart';
+import '../end_provider/end_provider_test.dart';
 import '../movement_provider/movement_provider_test.dart';
 import '../rule_provider/rule_provider_test.dart';
 import '../turn_manager/turn_manager_test.dart';
@@ -11,6 +12,7 @@ const testGame = Game(
   board: testBoard,
   movementProvider: testMovementProvider,
   ruleProvider: testRuleProvider,
+  endProvider: testEndProvider,
   turnManager: testTurnManager,
   previousState: null,
 );

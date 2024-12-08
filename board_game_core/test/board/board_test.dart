@@ -23,7 +23,7 @@ void main() {
 
     test('Remove piece', () {
       final result = testBoard.remove("a").unwrap();
-      expect(result.get("a").runtimeType, Err<int, BoardError>);
+      expect(result.get("a").unwrap(), null);
     });
 
     test('Get all pieces', () {
