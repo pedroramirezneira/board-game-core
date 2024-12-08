@@ -9,7 +9,6 @@ environment:
 # Add regular dependencies here.
 dependencies:
   # path: ^1.8.0
-  macros: ^0.1.2-main.4
 
 dev_dependencies:
   lints: ^5.0.0
