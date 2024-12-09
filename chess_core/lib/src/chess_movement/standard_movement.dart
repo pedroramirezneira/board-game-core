@@ -24,7 +24,8 @@ class StandardMovement implements ChessMovement {
     }
     final direction = to - from;
     final lambda =
-        _vector.x == 0 ? direction.y / _vector.y : direction.x / _vector.x;
+        (_vector.x == 0 ? direction.y / _vector.y : direction.x / _vector.x)
+            .abs();
     if (lambda < 0) {
       return null;
     }
@@ -60,5 +61,10 @@ class StandardMovement implements ChessMovement {
 
   Vector2 _rotate180(Vector2 vector) {
     return Vector2(x: vector.x * -1, y: vector.y * -1);
+  }
+
+  @override
+  String toString() {
+    return "StandardMovement(vector: $_vector, limit: $_limit)";
   }
 }
