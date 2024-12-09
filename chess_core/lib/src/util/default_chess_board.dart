@@ -16,7 +16,7 @@ final Map<Vector2, Piece?> defaultChessBoard = {
         Vector2(x: x, y: y): null
 };
 
-final _firstRow = {
+const _firstRow = {
   0: "rook",
   1: "knight",
   2: "bishop",

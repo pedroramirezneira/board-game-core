@@ -10,8 +10,8 @@ class ChessRuleProvider implements RuleProvider<Vector2, Piece, Vector2> {
   RuleViolation? validate(Game<Vector2, Piece, Vector2> game) {
     for (final rule in defaultRules) {
       final result = rule.validate(game);
-      if (result != null) {
-        return result;
+      if (result) {
+        return rule;
       }
     }
     return null;

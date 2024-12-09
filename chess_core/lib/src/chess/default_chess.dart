@@ -1,4 +1,5 @@
 import 'package:board_game_core/board_game_core.dart';
+import 'package:chess_core/src/chess/chess_end_provider.dart';
 import 'package:chess_core/src/chess/chess_movement_provider.dart';
 import 'package:chess_core/src/chess/chess_rule_provider.dart';
 import 'package:chess_core/src/chess/chess_turn_manager.dart';
@@ -32,6 +33,7 @@ Game<Vector2, Piece, Vector2> defaultChess() {
     board: _board,
     movementProvider: ChessMovementProvider(),
     ruleProvider: const ChessRuleProvider(),
+    endProvider: const ChessEndProvider(),
     turnManager: const ChessTurnManager(),
     previousState: null,
   );

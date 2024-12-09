@@ -1,52 +1,52 @@
 import 'package:chess_core/src/data/vector2.dart';
 
-final forward = [
+const forward = [
   Vector2(x: 0, y: 1),
 ];
 
-final backward = [
+const backward = [
   Vector2(x: 0, y: -1),
 ];
 
-final left = [
+const left = [
   Vector2(x: -1, y: 0),
 ];
 
-final right = [
+const right = [
   Vector2(x: 1, y: 0),
 ];
 
-final straight = [
+const straight = [
   ...forward,
   ...backward,
   ...left,
   ...right,
 ];
 
-final forwardLeft = [
+const forwardLeft = [
   Vector2(x: -1, y: 1),
 ];
 
-final forwardRight = [
+const forwardRight = [
   Vector2(x: 1, y: 1),
 ];
 
-final backwardLeft = [
+const backwardLeft = [
   Vector2(x: -1, y: -1),
 ];
 
-final backwardRight = [
+const backwardRight = [
   Vector2(x: 1, y: -1),
 ];
 
-final diagonal = [
+const diagonal = [
   ...forwardLeft,
   ...forwardRight,
   ...backwardLeft,
   ...backwardRight,
 ];
 
-final knight = [
+const knight = [
   Vector2(x: 1, y: 2),
   Vector2(x: 2, y: 1),
   Vector2(x: 2, y: -1),

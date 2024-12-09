@@ -26,4 +26,9 @@ class Vector2 {
 
   @override
   int get hashCode => Object.hash(x, y);
+
+  @override
+  String toString() {
+    return "Vector2(x: $x, y: $y)";
+  }
 }
