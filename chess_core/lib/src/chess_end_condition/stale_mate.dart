@@ -5,12 +5,14 @@ import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
 class StaleMate implements ChessEndCondition {
-  const StaleMate();
+  final String pieceType;
+
+  const StaleMate(this.pieceType);
 
   @override
   bool validate(Game<Vector2, Piece, Vector2> game) {
     final nextPlayer = game.turnManager.getNextPlayer(game);
-    final state = game.copyWith(currentPlayer: nextPlayer);
+    final state = game.copyWith(currentPlayer: nextPlayer, previousState: game);
     final iterator = state.board.getAll();
     while (iterator.moveNext() != false) {
       final from = iterator.current.first;
@@ -32,8 +34,8 @@ class StaleMate implements ChessEndCondition {
     if (movement is Err) {
       return false;
     }
-    final state = game.copyWith(board: movement.unwrap());
-    if (Check().validate(state)) {
+    final state = game.copyWith(board: movement.unwrap(), previousState: game);
+    if (Check(pieceType).validate(state)) {
       return false;
     }
     return true;

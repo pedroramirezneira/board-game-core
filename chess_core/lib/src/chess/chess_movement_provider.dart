@@ -32,17 +32,17 @@ class ChessMovementProvider
         ? pieceMovements
         : pieceMovements!.map((movement) => movement.rotate180()).toList();
     final movement = playerMovements?.firstWhere(
-      (movement) => movement.validate(game, from, to),
+      (movement) => movement.execute(game, from, to) != null,
       orElse: () => _nullMovement,
     );
     if (movement == null || identical(movement, _nullMovement)) {
       return Err(MovementProviderError(_invalidMovementError));
     }
-    final result = board.move(from, to);
-    if (result is Err) {
-      return Err(MovementProviderError(result.unwrapErr().message));
+    final result = movement.execute(game, from, to);
+    if (result == null) {
+      return Err(MovementProviderError(_invalidMovementError));
     }
-    return Ok(result.unwrap());
+    return Ok(result);
   }
 }
 

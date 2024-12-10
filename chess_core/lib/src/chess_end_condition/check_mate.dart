@@ -6,14 +6,16 @@ import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
 class CheckMate implements ChessEndCondition {
-  const CheckMate();
+  final String pieceType;
+
+  const CheckMate(this.pieceType);
 
   @override
   bool validate(Game<Vector2, Piece, Vector2> game) {
     final nextPlayer = game.turnManager.getNextPlayer(game);
-    final state = game.copyWith(currentPlayer: nextPlayer);
-    final isInCheck = Check().validate(state);
-    final isStaleMate = StaleMate().validate(game);
+    final state = game.copyWith(currentPlayer: nextPlayer, previousState: game);
+    final isInCheck = Check(pieceType).validate(state);
+    final isStaleMate = StaleMate(pieceType).validate(game);
     if (isInCheck && isStaleMate) {
       return true;
     }

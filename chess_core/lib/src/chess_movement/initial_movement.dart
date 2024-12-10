@@ -13,16 +13,17 @@ class InitialMovement implements ChessMovement {
   }
 
   @override
-  bool validate(Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
+  Board<Vector2, Piece, Vector2>? execute(
+      Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
     var state = game.previousState;
     final piece = game.board.get(from).unwrap();
     while (state != null) {
       final oldPiece = state.board.get(from);
       if (oldPiece is Err || !identical(piece, oldPiece.unwrap())) {
-        return false;
+        return null;
       }
       state = state.previousState;
     }
-    return _movement.validate(game, from, to);
+    return _movement.execute(game, from, to);
   }
 }

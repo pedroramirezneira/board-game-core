@@ -10,12 +10,20 @@ class StandardMovement implements ChessMovement {
       : _vector = vector,
         _limit = limit;
   @override
-  bool validate(Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
+  Board<Vector2, Piece, Vector2>? execute(
+      Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
     final lambda = _getLambda(to, from);
     if (lambda == null) {
-      return false;
+      return null;
     }
-    return _isPathClear(game.board, from, to, lambda);
+    if (!_isPathClear(game.board, from, to, lambda)) {
+      return null;
+    }
+    final result = game.board.move(from, to);
+    if (result is Err) {
+      return null;
+    }
+    return result.unwrap();
   }
 
   int? _getLambda(Vector2 to, Vector2 from) {

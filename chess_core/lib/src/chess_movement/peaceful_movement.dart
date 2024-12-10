@@ -13,11 +13,12 @@ class PeacefulMovement implements ChessMovement {
   }
 
   @override
-  bool validate(Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
+  Board<Vector2, Piece, Vector2>? execute(
+      Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
     final piece = game.board.get(to);
     if (piece is Err || piece.unwrap() != null) {
-      return false;
+      return null;
     }
-    return _movement.validate(game, from, to);
+    return _movement.execute(game, from, to);
   }
 }
