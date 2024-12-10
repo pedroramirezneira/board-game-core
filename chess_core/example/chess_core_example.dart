@@ -14,4 +14,16 @@ void main() {
   final condition = (chess as EndedGame).endCondition.runtimeType;
   print("$condition by ${chess.currentPlayer}");
   print("Time: ${DateTime.now().difference(time).inMilliseconds}ms");
+  print("");
+
+  // Castling
+  chess = defaultChess();
+  chess = chess.move(Vector2(x: 6, y: 1), Vector2(x: 6, y: 2)).unwrap();
+  chess = chess.move(Vector2(x: 7, y: 6), Vector2(x: 7, y: 5)).unwrap();
+  chess = chess.move(Vector2(x: 5, y: 0), Vector2(x: 6, y: 1)).unwrap();
+  chess = chess.move(Vector2(x: 7, y: 5), Vector2(x: 7, y: 4)).unwrap();
+  chess = chess.move(Vector2(x: 6, y: 0), Vector2(x: 5, y: 2)).unwrap();
+  chess = chess.move(Vector2(x: 7, y: 4), Vector2(x: 7, y: 3)).unwrap();
+  chess = chess.move(Vector2(x: 4, y: 0), Vector2(x: 6, y: 0)).unwrap();
+  print(chess.board);
 }

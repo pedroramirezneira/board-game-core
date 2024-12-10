@@ -31,19 +31,17 @@ class StandardMovement implements ChessMovement {
       return null;
     }
     final direction = to - from;
-    final lambda =
-        (_vector.x == 0 ? direction.y / _vector.y : direction.x / _vector.x)
-            .abs();
-    if (lambda < 0) {
-      return null;
-    }
+    final lambda = switch (direction.x) {
+      0 => direction.y.abs(),
+      _ => direction.x.abs(),
+    };
     if (_vector.y * lambda != direction.y) {
       return null;
     }
     if (_limit != null && lambda > _limit) {
       return null;
     }
-    return lambda.round();
+    return lambda;
   }
 
   bool _isPathClear(

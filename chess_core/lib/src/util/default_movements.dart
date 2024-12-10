@@ -1,4 +1,5 @@
 import 'package:chess_core/src/chess_movement/attack_movement.dart';
+import 'package:chess_core/src/chess_movement/castling.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
 import 'package:chess_core/src/chess_movement/initial_movement.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
@@ -8,8 +9,10 @@ import 'package:chess_core/src/util/default_vectors.dart';
 
 final Map<String, List<ChessMovement>> defaultMovements = {
   "king": [...straight, ...diagonal]
-      .map((e) => StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1))
-      .toList(),
+      .map<ChessMovement>(
+          (e) => StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1))
+      .toList()
+    ..add(Castling("king", "rook")),
   "queen": [...straight, ...diagonal]
       .map((e) => StandardMovement(vector: Vector2(x: e.x, y: e.y)))
       .toList(),
