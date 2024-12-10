@@ -1,6 +1,7 @@
 import 'package:chess_core/src/chess_movement/attack_movement.dart';
 import 'package:chess_core/src/chess_movement/castling.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
+import 'package:chess_core/src/chess_movement/en_passant.dart';
 import 'package:chess_core/src/chess_movement/initial_movement.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
 import 'package:chess_core/src/chess_movement/standard_movement.dart';
@@ -29,6 +30,10 @@ final Map<String, List<ChessMovement>> defaultMovements = {
       .map<ChessMovement>((e) => PeacefulMovement(
           StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1)))
       .toList()
+    ..addAll([
+      ...forwardLeft,
+      ...forwardRight
+    ].map((e) => PeacefulMovement(EnPassant("pawn", Vector2(x: e.x, y: e.y)))))
     ..addAll([...forwardLeft, ...forwardRight].map((e) => AttackMovement(
         StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1))))
     ..addAll([...forward].map((e) => InitialMovement(PeacefulMovement(

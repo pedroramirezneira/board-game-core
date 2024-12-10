@@ -1,5 +1,7 @@
 import 'package:board_game_core/board_game_core.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
+import 'package:chess_core/src/chess_movement/initial_movement.dart';
+import 'package:chess_core/src/chess_movement/valid_movement.dart';
 import 'package:chess_core/src/chess_rule/check.dart';
 import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
@@ -19,7 +21,7 @@ class Castling implements ChessMovement {
     if ((to.x - from.x).abs() != 2) {
       return null;
     }
-    if (_hasMoved(game, from)) {
+    if (InitialMovement(ValidMovement()).execute(game, from, from) == null) {
       return null;
     }
     final direction = switch (to.x - from.x > 0) {
@@ -33,7 +35,7 @@ class Castling implements ChessMovement {
     if (scan == null) {
       return null;
     }
-    if (_hasMoved(game, scan)) {
+    if (InitialMovement(ValidMovement()).execute(game, scan, scan) == null) {
       return null;
     }
     final destination = switch (direction) {
@@ -45,9 +47,9 @@ class Castling implements ChessMovement {
       return null;
     }
     final result = step.unwrap().move(from, to);
-    return switch (result is Err) {
-      true => null,
-      false => result.unwrap(),
+    return switch (result) {
+      Err() => null,
+      Ok() => result.unwrap(),
     };
   }
 
@@ -70,25 +72,6 @@ class Castling implements ChessMovement {
       _ when result?.type == otherType => position,
       _ => null,
     };
-  }
-
-  bool _hasMoved(Game<Vector2, Piece, Vector2> game, Vector2 position) {
-    final piece = game.board.get(position);
-    if (piece is Err) {
-      return true;
-    }
-    var state = game.previousState;
-    while (state != null) {
-      final oldPiece = state.board.get(position);
-      if (oldPiece is Err) {
-        return true;
-      }
-      if (!identical(oldPiece, piece)) {
-        return true;
-      }
-      state = state.previousState;
-    }
-    return false;
   }
 
   bool _isInCheck(
