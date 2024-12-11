@@ -21,7 +21,7 @@ class Promotion implements ChessMovement {
       _ => false,
     };
     if (!isValid) {
-      return null;
+      return _movement.execute(game, from, to);
     }
     return switch (_movement.execute(game, from, to)) {
       null => null,
@@ -35,6 +35,6 @@ class Promotion implements ChessMovement {
 
   @override
   ChessMovement rotate180() {
-    return this;
+    return Promotion(_movement.rotate180(), _pieceType);
   }
 }
