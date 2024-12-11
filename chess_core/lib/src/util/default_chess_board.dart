@@ -5,15 +5,15 @@ final Map<Vector2, Piece?> defaultChessBoard = {
   for (var x = 0; x < 8; x++)
     for (var y = 0; y < 8; y++)
       if (y == 0)
-        Vector2(x: x, y: y): Piece(type: _firstRow[x]!, color: "white")
+        Vector2(x, y): Piece(type: _firstRow[x]!, color: "white")
       else if (y == 1)
-        Vector2(x: x, y: y): Piece(type: "pawn", color: "white")
+        Vector2(x, y): Piece(type: "pawn", color: "white")
       else if (y == 6)
-        Vector2(x: x, y: y): Piece(type: "pawn", color: "black")
+        Vector2(x, y): Piece(type: "pawn", color: "black")
       else if (y == 7)
-        Vector2(x: x, y: y): Piece(type: _firstRow[x]!, color: "black")
+        Vector2(x, y): Piece(type: _firstRow[x]!, color: "black")
       else
-        Vector2(x: x, y: y): null
+        Vector2(x, y): null
 };
 
 const _firstRow = {

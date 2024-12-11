@@ -1,19 +1,19 @@
 import 'package:chess_core/src/data/vector2.dart';
 
 const forward = [
-  Vector2(x: 0, y: 1),
+  Vector2(0, 1),
 ];
 
 const backward = [
-  Vector2(x: 0, y: -1),
+  Vector2(0, -1),
 ];
 
 const left = [
-  Vector2(x: -1, y: 0),
+  Vector2(-1, 0),
 ];
 
 const right = [
-  Vector2(x: 1, y: 0),
+  Vector2(1, 0),
 ];
 
 const straight = [
@@ -24,19 +24,19 @@ const straight = [
 ];
 
 const forwardLeft = [
-  Vector2(x: -1, y: 1),
+  Vector2(-1, 1),
 ];
 
 const forwardRight = [
-  Vector2(x: 1, y: 1),
+  Vector2(1, 1),
 ];
 
 const backwardLeft = [
-  Vector2(x: -1, y: -1),
+  Vector2(-1, -1),
 ];
 
 const backwardRight = [
-  Vector2(x: 1, y: -1),
+  Vector2(1, -1),
 ];
 
 const diagonal = [
@@ -47,12 +47,12 @@ const diagonal = [
 ];
 
 const knight = [
-  Vector2(x: 1, y: 2),
-  Vector2(x: 2, y: 1),
-  Vector2(x: 2, y: -1),
-  Vector2(x: 1, y: -2),
-  Vector2(x: -1, y: -2),
-  Vector2(x: -2, y: -1),
-  Vector2(x: -2, y: 1),
-  Vector2(x: -1, y: 2),
+  Vector2(1, 2),
+  Vector2(2, 1),
+  Vector2(2, -1),
+  Vector2(1, -2),
+  Vector2(-1, -2),
+  Vector2(-2, -1),
+  Vector2(-2, 1),
+  Vector2(-1, 2),
 ];

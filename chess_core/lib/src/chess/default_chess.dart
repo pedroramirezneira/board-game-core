@@ -9,12 +9,12 @@ import 'package:chess_core/src/util/default_chess_board.dart';
 
 final _board = Board(
   initial: defaultChessBoard,
-  size: const Vector2(x: 8, y: 8),
+  size: const Vector2(8, 8),
   toString: (board) {
     final buffer = StringBuffer();
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        final piece = board.get(Vector2(x: j, y: i));
+        final piece = board.get(Vector2(j, i));
         buffer.write("|${piece.unwrap()?.type}".padRight(7));
         if (j == 7 && i == 7) {
           buffer.write("|");

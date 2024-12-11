@@ -17,8 +17,8 @@ class EnPassant implements ChessMovement {
   ) {
     final direction = to - from;
     final position = switch (direction) {
-      _ when direction.y > 0 => Vector2(x: direction.x, y: direction.y - 1),
-      _ => Vector2(x: direction.x, y: direction.y + 1),
+      _ when direction.y > 0 => Vector2(direction.x, direction.y - 1),
+      _ => Vector2(direction.x, direction.y + 1),
     };
     final opponent = switch (game.board.get(position)) {
       Ok() => game.board.get(position).unwrap(),
@@ -30,8 +30,8 @@ class EnPassant implements ChessMovement {
       return null;
     }
     final oldPosition = switch (direction) {
-      _ when direction.y > 0 => Vector2(x: to.x, y: to.y + 1),
-      _ => Vector2(x: to.x, y: to.y - 1),
+      _ when direction.y > 0 => Vector2(to.x, to.y + 1),
+      _ => Vector2(to.x, to.y - 1),
     };
     final oldOpponent = switch (game.previousState?.board.get(oldPosition)) {
       Ok() => game.previousState?.board.get(oldPosition).unwrap(),
@@ -56,6 +56,6 @@ class EnPassant implements ChessMovement {
   ChessMovement rotate180() => EnPassant(otherType, _rotate180(vector));
 
   Vector2 _rotate180(Vector2 vector) {
-    return Vector2(x: vector.x * -1, y: vector.y * -1);
+    return Vector2(vector.x * -1, vector.y * -1);
   }
 }

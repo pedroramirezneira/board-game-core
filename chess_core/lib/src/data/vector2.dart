@@ -2,18 +2,18 @@ class Vector2 {
   final int x;
   final int y;
 
-  const Vector2({required this.x, required this.y});
+  const Vector2(this.x, this.y);
 
   Vector2 operator +(Vector2 other) {
-    return Vector2(x: x + other.x, y: y + other.y);
+    return Vector2(x + other.x, y + other.y);
   }
 
   Vector2 operator *(int other) {
-    return Vector2(x: x * other, y: y * other);
+    return Vector2(x * other, y * other);
   }
 
   Vector2 operator -(Vector2 other) {
-    return Vector2(x: x - other.x, y: y - other.y);
+    return Vector2(x - other.x, y - other.y);
   }
 
   @override

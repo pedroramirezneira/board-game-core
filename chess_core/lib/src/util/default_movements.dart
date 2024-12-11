@@ -11,31 +11,27 @@ import 'package:chess_core/src/util/default_vectors.dart';
 final Map<String, List<ChessMovement>> defaultMovements = {
   "king": [...straight, ...diagonal]
       .map<ChessMovement>(
-          (e) => StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1))
+          (e) => StandardMovement(vector: Vector2(e.x, e.y), limit: 1))
       .toList()
     ..add(Castling("king", "rook")),
   "queen": [...straight, ...diagonal]
-      .map((e) => StandardMovement(vector: Vector2(x: e.x, y: e.y)))
+      .map((e) => StandardMovement(vector: Vector2(e.x, e.y)))
       .toList(),
-  "rook": straight
-      .map((e) => StandardMovement(vector: Vector2(x: e.x, y: e.y)))
-      .toList(),
-  "bishop": diagonal
-      .map((e) => StandardMovement(vector: Vector2(x: e.x, y: e.y)))
-      .toList(),
+  "rook":
+      straight.map((e) => StandardMovement(vector: Vector2(e.x, e.y))).toList(),
+  "bishop":
+      diagonal.map((e) => StandardMovement(vector: Vector2(e.x, e.y))).toList(),
   "knight": knight
-      .map((e) => StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1))
+      .map((e) => StandardMovement(vector: Vector2(e.x, e.y), limit: 1))
       .toList(),
   "pawn": forward
       .map<ChessMovement>((e) => PeacefulMovement(
-          StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1)))
+          StandardMovement(vector: Vector2(e.x, e.y), limit: 1)))
       .toList()
-    ..addAll([
-      ...forwardLeft,
-      ...forwardRight
-    ].map((e) => PeacefulMovement(EnPassant("pawn", Vector2(x: e.x, y: e.y)))))
-    ..addAll([...forwardLeft, ...forwardRight].map((e) => AttackMovement(
-        StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 1))))
-    ..addAll([...forward].map((e) => InitialMovement(PeacefulMovement(
-        StandardMovement(vector: Vector2(x: e.x, y: e.y), limit: 2)))))
+    ..addAll([...forwardLeft, ...forwardRight]
+        .map((e) => PeacefulMovement(EnPassant("pawn", Vector2(e.x, e.y)))))
+    ..addAll([...forwardLeft, ...forwardRight].map((e) =>
+        AttackMovement(StandardMovement(vector: Vector2(e.x, e.y), limit: 1))))
+    ..addAll(forward.map((e) => InitialMovement(PeacefulMovement(
+        StandardMovement(vector: Vector2(e.x, e.y), limit: 2)))))
 };

@@ -39,8 +39,8 @@ class Castling implements ChessMovement {
       return null;
     }
     final destination = switch (direction) {
-      _Direction.left => from - Vector2(x: 1, y: 0),
-      _Direction.right => from + Vector2(x: 1, y: 0),
+      _Direction.left => from - Vector2(1, 0),
+      _Direction.right => from + Vector2(1, 0),
     };
     final step = game.movementProvider.execute(game, scan, destination);
     if (step is Err) {
@@ -59,8 +59,8 @@ class Castling implements ChessMovement {
     _Direction direction,
   ) {
     final position = switch (direction) {
-      _Direction.left => from - Vector2(x: 1, y: 0),
-      _Direction.right => from + Vector2(x: 1, y: 0),
+      _Direction.left => from - Vector2(1, 0),
+      _Direction.right => from + Vector2(1, 0),
     };
     final piece = game.board.get(position);
     if (piece is Err) {
@@ -80,8 +80,8 @@ class Castling implements ChessMovement {
     _Direction direction,
   ) {
     final destination = switch (direction) {
-      _Direction.left => position - Vector2(x: 1, y: 0),
-      _Direction.right => position + Vector2(x: 1, y: 0),
+      _Direction.left => position - Vector2(1, 0),
+      _Direction.right => position + Vector2(1, 0),
     };
     final step = game.movementProvider.execute(game, position, destination);
     if (step is Err) {
