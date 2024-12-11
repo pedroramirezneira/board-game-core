@@ -33,8 +33,8 @@ class Game<K, V, S> {
     if (hasEnded != null) {
       return Ok(EndedGame.fromGame(state, hasEnded));
     }
-    final nextPlayer = turnManager.getNextPlayer(state);
-    final result = state.copyWith(currentPlayer: nextPlayer);
+    final player = turnManager.getNextPlayer(state);
+    final result = state.copyWith(currentPlayer: player, previousState: this);
     return Ok(result);
   }
 
@@ -54,7 +54,7 @@ class Game<K, V, S> {
       ruleProvider: ruleProvider ?? this.ruleProvider,
       endProvider: endProvider ?? this.endProvider,
       turnManager: turnManager ?? this.turnManager,
-      previousState: previousState,
+      previousState: previousState ?? this.previousState,
     );
   }
 }

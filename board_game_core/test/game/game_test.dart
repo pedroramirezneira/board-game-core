@@ -72,5 +72,11 @@ void main() {
       final newBoard = board.remove("d");
       expect(newBoard.runtimeType, Err<Board<String, String, int>, BoardError>);
     });
+
+    test("Previous state test", () {
+      final state = testGame.move("a", "b").unwrap();
+      expect(state.previousState, testGame);
+      expect(state.previousState?.previousState, isNull);
+    });
   });
 }
