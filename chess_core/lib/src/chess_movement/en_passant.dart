@@ -17,8 +17,8 @@ class EnPassant implements ChessMovement {
   ) {
     final direction = to - from;
     final position = switch (direction) {
-      _ when direction.y > 0 => Vector2(direction.x, direction.y - 1),
-      _ => Vector2(direction.x, direction.y + 1),
+      _ when direction.y > 0 => Vector2(to.x, to.y - 1),
+      _ => Vector2(to.x, to.y + 1),
     };
     final opponent = switch (game.board.get(position)) {
       Ok() => game.board.get(position).unwrap(),

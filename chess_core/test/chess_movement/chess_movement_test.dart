@@ -35,5 +35,15 @@ void main() {
       final result = movement.execute(_testGame, Vector2(5, 1), Vector2(5, 2));
       expect(result, isNull);
     });
+
+    test("En passant test", () {
+      var chess = defaultChess();
+      chess = chess.move(Vector2(0, 1), Vector2(0, 3)).unwrap();
+      chess = chess.move(Vector2(7, 6), Vector2(7, 5)).unwrap();
+      chess = chess.move(Vector2(0, 3), Vector2(0, 4)).unwrap();
+      chess = chess.move(Vector2(1, 6), Vector2(1, 4)).unwrap();
+      chess = chess.move(Vector2(0, 4), Vector2(1, 5)).unwrap();
+      expect(chess.board.get(Vector2(1, 4)).unwrap(), isNull);
+    });
   });
 }
