@@ -53,6 +53,15 @@ class Board<K, V, S> {
     return Ok(Board(initial: map, size: size, toString: _toString));
   }
 
+  Result<Board<K, V, S>, BoardError> put(K position, V value) {
+    if (!_map.containsKey(position)) {
+      return Err(BoardError(_invalidMovementError));
+    }
+    final map = Map<K, V?>.from(_map);
+    map[position] = value;
+    return Ok(Board(initial: map, size: size, toString: _toString));
+  }
+
   @override
   String toString() {
     return _toString != null
