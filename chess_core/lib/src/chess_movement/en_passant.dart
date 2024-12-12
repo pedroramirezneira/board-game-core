@@ -1,5 +1,7 @@
 import 'package:board_game_core/board_game_core.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
+import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
+import 'package:chess_core/src/chess_movement/standard_movement.dart';
 import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
@@ -39,6 +41,10 @@ class EnPassant implements ChessMovement {
       null => null,
     };
     if (!identical(opponent, oldOpponent)) {
+      return null;
+    }
+    final movement = PeacefulMovement(StandardMovement(vector: vector));
+    if (movement.execute(game, from, to) == null) {
       return null;
     }
     final board = game.board.remove(position);
