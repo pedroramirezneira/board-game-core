@@ -11,7 +11,7 @@ void main() {
   chess = chess.move(Vector2(6, 1), Vector2(6, 3)).unwrap();
   chess = chess.move(Vector2(3, 7), Vector2(7, 3)).unwrap();
   print(chess.board);
-  final condition = (chess as EndedGame).endCondition.runtimeType;
+  final condition = (chess as EndedGame).endCondition.toString();
   print("$condition by ${chess.currentPlayer}");
   print("Time: ${DateTime.now().difference(time).inMilliseconds}ms");
   print("");

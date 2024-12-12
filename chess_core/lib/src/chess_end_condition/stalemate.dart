@@ -4,10 +4,10 @@ import 'package:chess_core/src/chess_rule/check.dart';
 import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
-class StaleMate implements ChessEndCondition {
+class Stalemate implements ChessEndCondition {
   final String pieceType;
 
-  const StaleMate(this.pieceType);
+  const Stalemate(this.pieceType);
 
   @override
   bool validate(Game<Vector2, Piece, Vector2> game) {
@@ -40,4 +40,7 @@ class StaleMate implements ChessEndCondition {
     }
     return true;
   }
+
+  @override
+  String toString() => "Stalemate";
 }

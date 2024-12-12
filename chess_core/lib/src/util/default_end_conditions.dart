@@ -1,7 +1,7 @@
-import 'package:chess_core/src/chess_end_condition/check_mate.dart';
-import 'package:chess_core/src/chess_end_condition/stale_mate.dart';
+import 'package:chess_core/src/chess_end_condition/checkmate.dart';
+import 'package:chess_core/src/chess_end_condition/stalemate.dart';
 
 const defaultEndConditions = [
-  CheckMate("king"),
-  StaleMate("king"),
+  Checkmate("king"),
+  Stalemate("king"),
 ];
