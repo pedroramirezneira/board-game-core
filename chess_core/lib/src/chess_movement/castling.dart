@@ -18,7 +18,7 @@ class Castling implements ChessMovement {
     Vector2 from,
     Vector2 to,
   ) {
-    if ((to.x - from.x).abs() != 2) {
+    if ((to.x - from.x).abs() != 2 || to.y != from.y) {
       return null;
     }
     if (InitialMovement(ValidMovement()).execute(game, from, from) == null) {
