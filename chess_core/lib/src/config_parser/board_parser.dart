@@ -1,6 +1,4 @@
 import 'package:chess_core/chess_core.dart';
-import 'package:chess_core/src/config/board_config.dart';
-import 'package:chess_core/src/config/chess_config.dart';
 
 class BoardParser {
   Result<Board<Vector2, Piece, Vector2>, String> parse(ChessConfig config) {

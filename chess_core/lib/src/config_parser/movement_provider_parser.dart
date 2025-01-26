@@ -5,8 +5,6 @@ import 'package:chess_core/src/chess_movement/chess_movement.dart';
 import 'package:chess_core/src/chess_movement/initial_movement.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
 import 'package:chess_core/src/chess_movement/standard_movement.dart';
-import 'package:chess_core/src/config/chess_config.dart';
-import 'package:chess_core/src/config/movement_config.dart';
 import 'package:chess_core/src/util/default_movements.dart';
 
 class MovementProviderParser {

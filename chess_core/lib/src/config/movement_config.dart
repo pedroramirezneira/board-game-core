@@ -1,6 +1,3 @@
-import 'package:json/json.dart';
-
-@JsonCodable()
 class MovementConfig {
   final String name;
   final List<String> modifiers;
@@ -28,4 +25,26 @@ class MovementConfig {
 
   @override
   int get hashCode => Object.hash(name, modifiers, vectors);
+
+  factory MovementConfig.fromJson(Map<String, dynamic> json) {
+    final modifiers = json['modifiers'] as List<dynamic>;
+    final vectors = (json['vectors'] as List<dynamic>)
+        .map((e) => (e as List<dynamic>).cast<int>())
+        .toList();
+    return MovementConfig(
+      name: json['name'],
+      modifiers: modifiers.cast(),
+      vectors: vectors.cast(),
+      limit: json['limit'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'modifiers': modifiers,
+      'vectors': vectors,
+      'limit': limit,
+    };
+  }
 }

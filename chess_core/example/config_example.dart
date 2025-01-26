@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:chess_core/chess_core.dart';
-import 'package:chess_core/src/config/chess_config.dart';
-import 'package:chess_core/src/config_parser/config_parser.dart';
 
 Future<void> main(List<String> args) async {
   final string =

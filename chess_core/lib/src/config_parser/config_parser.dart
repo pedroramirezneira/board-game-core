@@ -1,5 +1,4 @@
 import 'package:chess_core/chess_core.dart';
-import 'package:chess_core/src/config/chess_config.dart';
 import 'package:chess_core/src/config_parser/board_parser.dart';
 import 'package:chess_core/src/config_parser/movement_provider_parser.dart';
 
