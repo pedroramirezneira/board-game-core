@@ -3,11 +3,15 @@ import 'package:json/json.dart';
 @JsonCodable()
 class MovementConfig {
   final String name;
-  final List<List<String>> vectors;
+  final List<String> modifiers;
+  final List<List<int>> vectors;
+  final int? limit;
 
   const MovementConfig({
     required this.name,
+    required this.modifiers,
     required this.vectors,
+    this.limit,
   });
 
   @override
@@ -17,9 +21,11 @@ class MovementConfig {
     }
     return other is MovementConfig &&
         name == other.name &&
-        vectors == other.vectors;
+        modifiers == other.modifiers &&
+        vectors == other.vectors &&
+        limit == other.limit;
   }
 
   @override
-  int get hashCode => Object.hash(name, vectors);
+  int get hashCode => Object.hash(name, modifiers, vectors);
 }

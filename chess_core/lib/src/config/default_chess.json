@@ -1,16 +1,27 @@
 {
   "use_default": true,
-  "board_size": "8, 8",
+  "board": {
+    "height": 8,
+    "width": 8,
+    "arrangement": {
+      "0 0": "white rook",
+      "1 0": "white knight",
+      "2 0": "white custom",
+      "0 7": "black king"
+    }
+  },
   "movements": [
     {
-      "name": "special",
-      "vectors": ["straight", "diagonal", "knight"]
+      "name": "custom",
+      "modifiers": ["initial"],
+      "vectors": [[1, 3], [-1, 3]],
+      "limit": 1
     }
   ],
   "pieces": [
     {
-      "type": "special",
-      "movements": ["special"]
+      "type": "custom",
+      "movements": ["queen", "knight", "custom"]
     }
   ]
 }
