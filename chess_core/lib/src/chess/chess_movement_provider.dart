@@ -30,7 +30,7 @@ class ChessMovementProvider
     final pieceMovements = movements[origin.unwrap()?.type];
     final playerMovements = game.currentPlayer == "white"
         ? pieceMovements
-        : pieceMovements!.map((movement) => movement.rotate180()).toList();
+        : pieceMovements?.map((movement) => movement.rotate180()).toList();
     final movement = playerMovements?.firstWhere(
       (movement) => movement.execute(game, from, to) != null,
       orElse: () => _nullMovement,
