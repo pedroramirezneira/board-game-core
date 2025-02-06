@@ -10,19 +10,15 @@ import 'package:chess_core/src/util/default_movements.dart';
 class MovementProviderParser {
   Result<MovementProvider<Vector2, Piece, Vector2>, String> parse(
       ChessConfig config) {
-    final provider = ChessMovementProvider();
-    if (!config.use_default) {
-      provider.movements.clear();
-    }
-    final movements =
-        config.movements == null ? null : _parseMovements(config.movements!);
+    ChessMovementProvider provider = switch (config.use_default) {
+      true => ChessMovementProvider(),
+      false => ChessMovementProvider({}),
+    };
+    final movements = _parseMovements(config.movements ?? <MovementConfig>[]);
     if (movements == null) {
       return Err("Invalid movements");
     }
-    if (config.pieces == null) {
-      return Ok(provider);
-    }
-    for (final piece in config.pieces!) {
+    for (final PieceConfig piece in config.pieces ?? []) {
       final List<ChessMovement> list = [];
       for (final movement in piece.movements) {
         if (defaultMovements.containsKey(movement)) {
@@ -34,7 +30,7 @@ class MovementProviderParser {
         }
         list.addAll(movements[movement]!);
       }
-      provider.movements[piece.type] = list;
+      provider = provider.setMovementsForPiece(piece.type, list);
     }
     return Ok(provider);
   }

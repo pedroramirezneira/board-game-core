@@ -38,6 +38,9 @@ class StandardMovement implements ChessMovement {
       _ when direction.x != 0 => (direction.x / _vector.x).abs(),
       _ => (direction.y / _vector.y).abs(),
     };
+    if (lambda % 1 != 0) {
+      return null;
+    }
     if (_vector.x * lambda != direction.x) {
       return null;
     }

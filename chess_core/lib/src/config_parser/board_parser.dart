@@ -2,18 +2,15 @@ import 'package:chess_core/chess_core.dart';
 
 class BoardParser {
   Result<Board<Vector2, Piece, Vector2>, String> parse(ChessConfig config) {
-    if (config.board == null) {
-      return Ok(defaultChess().board);
-    }
-    final arrangement = _parseArrangement(config.board!);
+    final arrangement = _parseArrangement(config.board);
     if (arrangement == null) {
       return Err("Invalid arrangement");
     }
     final board = Board(
       initial: arrangement,
       size: Vector2(
-        config.board!.width,
-        config.board!.height,
+        config.board.width,
+        config.board.height,
       ),
       toString: (board) {
         final buffer = StringBuffer();

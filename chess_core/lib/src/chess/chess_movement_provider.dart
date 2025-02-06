@@ -12,8 +12,10 @@ const _invalidMovementError = "The movement is invalid.";
 
 class ChessMovementProvider
     implements MovementProvider<Vector2, Piece, Vector2> {
-  final Map<String, List<ChessMovement>> movements = defaultMovements;
-  ChessMovementProvider();
+  final Map<String, List<ChessMovement>> _movements;
+  ChessMovementProvider([Map<String, List<ChessMovement>>? movements])
+      : _movements = movements ?? defaultMovements;
+
   @override
   Result<Board<Vector2, Piece, Vector2>, MovementProviderError> execute(
       Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
@@ -27,7 +29,7 @@ class ChessMovementProvider
         destination.unwrap()?.color == game.currentPlayer) {
       return Err(MovementProviderError(_invalidDestinationError));
     }
-    final pieceMovements = movements[origin.unwrap()?.type];
+    final pieceMovements = _movements[origin.unwrap()?.type];
     final playerMovements = game.currentPlayer == "white"
         ? pieceMovements
         : pieceMovements?.map((movement) => movement.rotate180()).toList();
@@ -43,6 +45,13 @@ class ChessMovementProvider
       return Err(MovementProviderError(_invalidMovementError));
     }
     return Ok(result);
+  }
+
+  ChessMovementProvider setMovementsForPiece(
+    String type,
+    List<ChessMovement> movements,
+  ) {
+    return ChessMovementProvider(_movements).._movements[type] = movements;
   }
 }
 
