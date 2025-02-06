@@ -13,4 +13,6 @@ export 'src/config/board_config.dart';
 export 'src/config/movement_config.dart';
 export 'src/config/piece_config.dart';
 export 'src/config_parser/config_parser.dart';
+export 'src/config_parser/board_parser.dart';
+export 'src/config_parser/movement_provider_parser.dart';
 export 'package:board_game_core/board_game_core.dart';
