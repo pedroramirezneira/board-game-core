@@ -43,7 +43,7 @@ class MovementProviderParser {
       final vectors = item.vectors.map((e) => Vector2(e[0], e[1]));
       Iterable<ChessMovement> movements =
           vectors.map((v) => StandardMovement(vector: v, limit: item.limit));
-      for (final modifier in item.modifiers) {
+      for (final modifier in item.modifiers ?? []) {
         final result = switch (modifier) {
           "attack" => movements = movements.map((m) => AttackMovement(m)),
           "peaceful" => movements = movements.map((m) => PeacefulMovement(m)),
