@@ -18,6 +18,9 @@ class EnPassant implements ChessMovement {
     Vector2 to,
   ) {
     final direction = to - from;
+    if (direction != vector) {
+      return null;
+    }
     final position = switch (direction) {
       _ when direction.y > 0 => Vector2(to.x, to.y - 1),
       _ => Vector2(to.x, to.y + 1),

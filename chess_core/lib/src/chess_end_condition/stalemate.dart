@@ -13,30 +13,31 @@ class Stalemate implements ChessEndCondition {
   bool validate(Game<Vector2, Piece, Vector2> game) {
     final nextPlayer = game.turnManager.getNextPlayer(game);
     final state = game.copyWith(currentPlayer: nextPlayer, previousState: game);
+    final fromSquares = <Vector2>[];
+    final toSquares = <Vector2>[];
     final iterator = state.board.getAll();
-    while (iterator.moveNext() != false) {
-      final from = iterator.current.first;
-      final iterator2 = state.board.getAll();
-      while (iterator2.moveNext() != false) {
-        final to = iterator2.current.first;
-        if (_handleMove(from, to, state)) return false;
+    while (iterator.moveNext()) {
+      final entry = iterator.current;
+      final position = entry.first;
+      final piece = entry.second;
+      toSquares.add(position);
+      if (piece != null && piece.color == state.currentPlayer) {
+        fromSquares.add(position);
       }
     }
-    return true;
-  }
-
-  bool _handleMove(
-    Vector2 from,
-    Vector2 to,
-    Game<Vector2, Piece, Vector2> game,
-  ) {
-    final movement = game.movementProvider.execute(game, from, to);
-    if (movement is Err) {
-      return false;
-    }
-    final state = game.copyWith(board: movement.unwrap(), previousState: game);
-    if (Check(pieceType).validate(state)) {
-      return false;
+    for (final from in fromSquares) {
+      for (final to in toSquares) {
+        final result = state.movementProvider.execute(state, from, to);
+        if (result is Ok) {
+          final nextState = state.copyWith(
+            board: result.unwrap(),
+            previousState: state,
+          );
+          if (!Check(pieceType).validate(nextState)) {
+            return false;
+          }
+        }
+      }
     }
     return true;
   }

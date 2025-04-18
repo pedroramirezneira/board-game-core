@@ -33,18 +33,24 @@ class ChessMovementProvider
     final playerMovements = game.currentPlayer == "white"
         ? pieceMovements
         : pieceMovements?.map((movement) => movement.rotate180()).toList();
+    Board<Vector2, Piece, Vector2>? cachedResult;
     final movement = playerMovements?.firstWhere(
-      (movement) => movement.execute(game, from, to) != null,
+      (movement) {
+        final result = movement.execute(game, from, to);
+        if (result != null) {
+          cachedResult = result;
+          return true;
+        }
+        return false;
+      },
       orElse: () => _nullMovement,
     );
-    if (movement == null || identical(movement, _nullMovement)) {
+    if (movement == null ||
+        identical(movement, _nullMovement) ||
+        cachedResult == null) {
       return Err(MovementProviderError(_invalidMovementError));
     }
-    final result = movement.execute(game, from, to);
-    if (result == null) {
-      return Err(MovementProviderError(_invalidMovementError));
-    }
-    return Ok(result);
+    return Ok(cachedResult!);
   }
 
   ChessMovementProvider setMovementsForPiece(

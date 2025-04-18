@@ -14,12 +14,8 @@ class Checkmate implements ChessEndCondition {
   bool validate(Game<Vector2, Piece, Vector2> game) {
     final nextPlayer = game.turnManager.getNextPlayer(game);
     final state = game.copyWith(currentPlayer: nextPlayer, previousState: game);
-    final isInCheck = Check(pieceType).validate(state);
-    final isStaleMate = Stalemate(pieceType).validate(game);
-    if (isInCheck && isStaleMate) {
-      return true;
-    }
-    return false;
+    return Check(pieceType).validate(state) &&
+        Stalemate(pieceType).validate(game);
   }
 
   @override
