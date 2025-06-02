@@ -4,6 +4,7 @@ import 'package:chess_core/src/chess_movement/attack_movement.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
 import 'package:chess_core/src/chess_movement/initial_movement.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
+import 'package:chess_core/src/chess_movement/promotion.dart';
 import 'package:chess_core/src/chess_movement/standard_movement.dart';
 import 'package:chess_core/src/util/default_movements.dart';
 
@@ -43,11 +44,14 @@ class MovementProviderParser {
       final vectors = item.vectors.map((e) => Vector2(e[0], e[1]));
       Iterable<ChessMovement> movements =
           vectors.map((v) => StandardMovement(vector: v, limit: item.limit));
-      for (final modifier in item.modifiers ?? []) {
-        final result = switch (modifier) {
+      for (final modifier in item.modifiers ?? <String>[]) {
+        final result = switch (modifier.split("(")[0]) {
           "attack" => movements = movements.map((m) => AttackMovement(m)),
           "peaceful" => movements = movements.map((m) => PeacefulMovement(m)),
           "initial" => movements = movements.map((m) => InitialMovement(m)),
+          "promotion" => movements = movements.map(
+              (m) => Promotion(m, modifier.split("(")[1].replaceAll(")", "")),
+            ),
           _ => null
         };
         if (result == null) return null;
