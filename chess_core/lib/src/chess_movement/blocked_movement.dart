@@ -20,12 +20,12 @@ class BlockedMovement implements ChessMovement {
     if (lambda == null) {
       return null;
     }
-    for (var i = 1; i <= lambda; i++) {
+    for (var i = 1; i < lambda; i++) {
       final next = from + vector * i;
       if (switch (game.board.get(next)) {
-        BoardError _ => true,
-        Piece _ => true,
-        _ => false,
+        Err() => true,
+        Ok(value: null) => false,
+        Ok() => true,
       }) {
         return null;
       }

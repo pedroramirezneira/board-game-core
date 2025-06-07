@@ -16,6 +16,7 @@ class Castling implements ChessMovement {
     Vector2 from,
     Vector2 to,
   ) {
+    final piece = game.board.get(from).unwrap();
     if (movement.execute(game, from, to) == null) {
       return null;
     }
@@ -39,7 +40,7 @@ class Castling implements ChessMovement {
           when otherType != null &&
               board.get(to - vector).unwrap()?.type != otherType =>
         null,
-      Board<Vector2, Piece, Vector2> board => switch (board.move(from, to)) {
+      Board<Vector2, Piece, Vector2> board => switch (board.put(to, piece!)) {
           Err() => null,
           Ok(value: final board) => board,
         }

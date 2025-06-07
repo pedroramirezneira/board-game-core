@@ -14,8 +14,8 @@ final Map<String, List<ChessMovement>> defaultMovements = {
       .map<ChessMovement>((e) => StandardMovement(Vector2(e.x, e.y), limit: 1))
       .toList()
     ..addAll([
-      Castling(StandardMovement(Vector2(2, 0), limit: 2), otherType: "rook"),
-      Castling(StandardMovement(Vector2(-2, 0), limit: 2), otherType: "rook"),
+      Castling(StandardMovement(Vector2(2, 0), limit: 1), otherType: "rook"),
+      Castling(StandardMovement(Vector2(-2, 0), limit: 1), otherType: "rook"),
     ]),
   "queen": [...straight, ...diagonal]
       .map((e) => StandardMovement(Vector2(e.x, e.y)))
