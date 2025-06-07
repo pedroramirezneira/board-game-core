@@ -1,15 +1,13 @@
 import 'package:board_game_core/board_game_core.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
-import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
-import 'package:chess_core/src/chess_movement/standard_movement.dart';
 import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
 class EnPassant implements ChessMovement {
-  final String otherType;
-  final Vector2 vector;
+  final ChessMovement movement;
+  final String? otherType;
 
-  const EnPassant(this.otherType, this.vector);
+  const EnPassant(this.movement, {this.otherType});
 
   @override
   Board<Vector2, Piece, Vector2>? execute(
@@ -17,14 +15,11 @@ class EnPassant implements ChessMovement {
     Vector2 from,
     Vector2 to,
   ) {
-    final direction = to - from;
-    if (direction != vector) {
+    if (movement.execute(game, from, to) == null) {
       return null;
     }
-    final position = switch (direction) {
-      _ when direction.y > 0 => Vector2(to.x, to.y - 1),
-      _ => Vector2(to.x, to.y + 1),
-    };
+    final vector = (to - from).normalize();
+    final position = Vector2(to.x, to.y - vector.y);
     final opponent = switch (game.board.get(position)) {
       Ok() => game.board.get(position).unwrap(),
       Err() => null,
@@ -34,10 +29,7 @@ class EnPassant implements ChessMovement {
         opponent.type != otherType) {
       return null;
     }
-    final oldPosition = switch (direction) {
-      _ when direction.y > 0 => Vector2(to.x, to.y + 1),
-      _ => Vector2(to.x, to.y - 1),
-    };
+    final oldPosition = Vector2(to.x, to.y + vector.y);
     final oldOpponent = switch (game.previousState?.board.get(oldPosition)) {
       Ok() => game.previousState?.board.get(oldPosition).unwrap(),
       Err() => null,
@@ -46,25 +38,22 @@ class EnPassant implements ChessMovement {
     if (!identical(opponent, oldOpponent)) {
       return null;
     }
-    final movement = PeacefulMovement(StandardMovement(vector: vector));
-    if (movement.execute(game, from, to) == null) {
-      return null;
-    }
     final board = game.board.remove(position);
     if (board is Err) {
       return null;
     }
-    final result = board.unwrap().move(from, to);
-    return switch (result) {
-      Ok() => result.unwrap(),
+    return switch (board.unwrap().move(from, to)) {
+      Ok(value: final board) => board,
       Err() => null,
     };
   }
 
   @override
-  ChessMovement rotate180() => EnPassant(otherType, _rotate180(vector));
+  ChessMovement rotate180() => EnPassant(
+        movement.rotate180(),
+        otherType: otherType,
+      );
 
-  Vector2 _rotate180(Vector2 vector) {
-    return Vector2(vector.x * -1, vector.y * -1);
-  }
+  @override
+  String toString() => "EnPassant(movement: $movement, otherType: $otherType)";
 }

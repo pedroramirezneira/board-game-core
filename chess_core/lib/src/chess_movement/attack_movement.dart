@@ -4,12 +4,13 @@ import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
 class AttackMovement implements ChessMovement {
-  final ChessMovement _movement;
-  const AttackMovement(ChessMovement movement) : _movement = movement;
+  final ChessMovement movement;
+
+  const AttackMovement(this.movement);
 
   @override
   ChessMovement rotate180() {
-    return AttackMovement(_movement.rotate180());
+    return AttackMovement(movement.rotate180());
   }
 
   @override
@@ -19,6 +20,6 @@ class AttackMovement implements ChessMovement {
     if (piece is Err || piece.unwrap() == null) {
       return null;
     }
-    return _movement.execute(game, from, to);
+    return movement.execute(game, from, to);
   }
 }

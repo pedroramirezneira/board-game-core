@@ -43,7 +43,7 @@ class MovementProviderParser {
       if (defaultMovements.containsKey(item.name)) return null;
       final vectors = item.vectors.map((e) => Vector2(e[0], e[1]));
       Iterable<ChessMovement> movements =
-          vectors.map((v) => StandardMovement(vector: v, limit: item.limit));
+          vectors.map((v) => StandardMovement(v, limit: item.limit));
       for (final modifier in item.modifiers ?? <String>[]) {
         final result = switch (modifier.split("(")[0]) {
           "attack" => movements = movements.map((m) => AttackMovement(m)),

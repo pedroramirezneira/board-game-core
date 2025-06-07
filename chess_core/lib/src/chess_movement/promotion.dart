@@ -2,12 +2,10 @@ import 'package:chess_core/chess_core.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
 
 class Promotion implements ChessMovement {
-  final ChessMovement _movement;
-  final String _pieceType;
+  final ChessMovement movement;
+  final String pieceType;
 
-  const Promotion(ChessMovement movement, String pieceType)
-      : _movement = movement,
-        _pieceType = pieceType;
+  const Promotion(this.movement, this.pieceType);
 
   @override
   Board<Vector2, Piece, Vector2>? execute(
@@ -21,20 +19,20 @@ class Promotion implements ChessMovement {
       _ => false,
     };
     if (!isValid) {
-      return _movement.execute(game, from, to);
+      return movement.execute(game, from, to);
     }
-    return switch (_movement.execute(game, from, to)) {
+    return switch (movement.execute(game, from, to)) {
       null => null,
       _ => game.board
           .remove(from)
           .unwrap()
-          .put(to, Piece(type: _pieceType, color: game.currentPlayer))
+          .put(to, Piece(type: pieceType, color: game.currentPlayer))
           .unwrap(),
     };
   }
 
   @override
   ChessMovement rotate180() {
-    return Promotion(_movement.rotate180(), _pieceType);
+    return Promotion(movement.rotate180(), pieceType);
   }
 }

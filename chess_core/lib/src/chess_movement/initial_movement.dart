@@ -4,12 +4,13 @@ import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
 class InitialMovement implements ChessMovement {
-  final ChessMovement _movement;
-  const InitialMovement(ChessMovement movement) : _movement = movement;
+  final ChessMovement movement;
+
+  const InitialMovement(this.movement);
 
   @override
   ChessMovement rotate180() {
-    return InitialMovement(_movement.rotate180());
+    return InitialMovement(movement.rotate180());
   }
 
   @override
@@ -24,6 +25,6 @@ class InitialMovement implements ChessMovement {
       }
       state = state.previousState;
     }
-    return _movement.execute(game, from, to);
+    return movement.execute(game, from, to);
   }
 }

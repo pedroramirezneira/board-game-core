@@ -61,4 +61,4 @@ class ChessMovementProvider
   }
 }
 
-final _nullMovement = StandardMovement(vector: Vector2(0, 0));
+final _nullMovement = StandardMovement(Vector2(0, 0));
