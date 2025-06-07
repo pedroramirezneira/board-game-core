@@ -6,6 +6,7 @@ import 'package:chess_core/src/chess_movement/initial_movement.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
 import 'package:chess_core/src/chess_movement/promotion.dart';
 import 'package:chess_core/src/chess_movement/standard_movement.dart';
+import 'package:chess_core/src/chess_movement/valid_movement.dart';
 import 'package:chess_core/src/data/vector2.dart';
 import 'package:chess_core/src/util/default_vectors.dart';
 
@@ -14,8 +15,10 @@ final Map<String, List<ChessMovement>> defaultMovements = {
       .map<ChessMovement>((e) => StandardMovement(Vector2(e.x, e.y), limit: 1))
       .toList()
     ..addAll([
-      Castling(StandardMovement(Vector2(2, 0), limit: 1), otherType: "rook"),
-      Castling(StandardMovement(Vector2(-2, 0), limit: 1), otherType: "rook"),
+      InitialMovement(Castling(StandardMovement(Vector2(2, 0), limit: 1),
+          otherType: "rook", onPieceFound: InitialMovement(ValidMovement()))),
+      InitialMovement(Castling(StandardMovement(Vector2(-2, 0), limit: 1),
+          otherType: "rook", onPieceFound: InitialMovement(ValidMovement()))),
     ]),
   "queen": [...straight, ...diagonal]
       .map((e) => StandardMovement(Vector2(e.x, e.y)))

@@ -1,6 +1,7 @@
 import 'package:chess_core/chess_core.dart';
 import 'package:chess_core/src/chess/chess_movement_provider.dart';
 import 'package:chess_core/src/chess_movement/attack_movement.dart';
+import 'package:chess_core/src/chess_movement/castling.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
 import 'package:chess_core/src/chess_movement/initial_movement.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
@@ -51,6 +52,13 @@ class MovementProviderParser {
           "initial" => movements = movements.map((m) => InitialMovement(m)),
           "promotion" => movements = movements.map(
               (m) => Promotion(m, modifier.split("(")[1].replaceAll(")", "")),
+            ),
+          "castling" => movements = movements.map(
+              (m) => Castling(m,
+                  otherType: switch (modifier.contains("(")) {
+                    false => null,
+                    true => modifier.split("(")[1].replaceAll(")", ""),
+                  }),
             ),
           _ => null
         };

@@ -7,8 +7,9 @@ import 'package:chess_core/src/data/vector2.dart';
 class Castling implements ChessMovement {
   final ChessMovement movement;
   final String? otherType;
+  final ChessMovement? onPieceFound;
 
-  const Castling(this.movement, {this.otherType});
+  const Castling(this.movement, {this.otherType, this.onPieceFound});
 
   @override
   Board<Vector2, Piece, Vector2>? execute(
@@ -29,11 +30,10 @@ class Castling implements ChessMovement {
       board: newBoard.unwrap(),
       currentPlayer: game.currentPlayer,
     );
-    final scan = ScanMovement(vector).execute(
-      newGame,
-      to + vector,
-      to - vector,
-    );
+    final scan = ScanMovement(
+      vector,
+      onPieceFound: onPieceFound,
+    ).execute(newGame, to + vector, to - vector);
     return switch (scan) {
       null => null,
       Board<Vector2, Piece, Vector2> board
@@ -51,5 +51,6 @@ class Castling implements ChessMovement {
   ChessMovement rotate180() => Castling(
         movement.rotate180(),
         otherType: otherType,
+        onPieceFound: onPieceFound?.rotate180(),
       );
 }

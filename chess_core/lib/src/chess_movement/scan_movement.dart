@@ -3,8 +3,9 @@ import 'package:chess_core/src/chess_movement/chess_movement.dart';
 
 class ScanMovement implements ChessMovement {
   final Vector2 vector;
+  final ChessMovement? onPieceFound;
 
-  const ScanMovement(this.vector);
+  const ScanMovement(this.vector, {this.onPieceFound});
 
   @override
   Board<Vector2, Piece, Vector2>? execute(
@@ -18,10 +19,13 @@ class ScanMovement implements ChessMovement {
         Ok(value: Piece()) => switch (
               game.movementProvider.execute(game, from, to)) {
             Err() => null,
-            Ok(value: final board) => board,
+            Ok(value: final board) when onPieceFound == null => board,
+            Ok(value: final board) =>
+              onPieceFound!.execute(game, from, to) == null ? null : board,
           }
       };
 
   @override
-  ChessMovement rotate180() => ScanMovement(-vector);
+  ChessMovement rotate180() =>
+      ScanMovement(-vector, onPieceFound: onPieceFound?.rotate180());
 }
