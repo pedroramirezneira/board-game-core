@@ -22,8 +22,13 @@ Pair<Vector2, Vector2>? chooseBestMove(
       previousState: game,
     );
 
-    final score =
-        alphaBeta(newGame, depth - 1, -100000, 100000, !maximizingPlayer);
+    final score = alphaBeta(
+      newGame,
+      depth - 1,
+      -100000,
+      100000,
+      !maximizingPlayer,
+    );
 
     if (maximizingPlayer && score > bestScore) {
       bestScore = score;
@@ -53,8 +58,11 @@ int alphaBeta(
   if (maximizingPlayer) {
     int maxEval = -999999;
     for (final move in moves) {
-      final result =
-          game.movementProvider.execute(game, move.first, move.second);
+      final result = game.movementProvider.execute(
+        game,
+        move.first,
+        move.second,
+      );
       if (result is Err) continue;
 
       final newGame = game.copyWith(
@@ -72,8 +80,11 @@ int alphaBeta(
   } else {
     int minEval = 999999;
     for (final move in moves) {
-      final result =
-          game.movementProvider.execute(game, move.first, move.second);
+      final result = game.movementProvider.execute(
+        game,
+        move.first,
+        move.second,
+      );
       if (result is Err) continue;
 
       final newGame = game.copyWith(

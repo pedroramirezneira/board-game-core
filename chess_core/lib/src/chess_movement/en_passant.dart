@@ -49,10 +49,8 @@ class EnPassant implements ChessMovement {
   }
 
   @override
-  ChessMovement rotate180() => EnPassant(
-        movement.rotate180(),
-        otherType: otherType,
-      );
+  ChessMovement rotate180() =>
+      EnPassant(movement.rotate180(), otherType: otherType);
 
   @override
   String toString() => "EnPassant(movement: $movement, otherType: $otherType)";

@@ -11,37 +11,75 @@ import 'package:chess_core/src/data/vector2.dart';
 import 'package:chess_core/src/util/default_vectors.dart';
 
 final Map<String, List<ChessMovement>> defaultMovements = {
-  "king": [...straight, ...diagonal]
-      .map<ChessMovement>((e) => StandardMovement(Vector2(e.x, e.y), limit: 1))
-      .toList()
-    ..addAll([
-      InitialMovement(Castling(StandardMovement(Vector2(2, 0), limit: 1),
-          otherType: "rook", onPieceFound: InitialMovement(ValidMovement()))),
-      InitialMovement(Castling(StandardMovement(Vector2(-2, 0), limit: 1),
-          otherType: "rook", onPieceFound: InitialMovement(ValidMovement()))),
-    ]),
-  "queen": [...straight, ...diagonal]
-      .map((e) => StandardMovement(Vector2(e.x, e.y)))
-      .toList(),
+  "king":
+      [...straight, ...diagonal]
+          .map<ChessMovement>(
+            (e) => StandardMovement(Vector2(e.x, e.y), limit: 1),
+          )
+          .toList()
+        ..addAll([
+          InitialMovement(
+            Castling(
+              StandardMovement(Vector2(2, 0), limit: 1),
+              otherType: "rook",
+              onPieceFound: InitialMovement(ValidMovement()),
+            ),
+          ),
+          InitialMovement(
+            Castling(
+              StandardMovement(Vector2(-2, 0), limit: 1),
+              otherType: "rook",
+              onPieceFound: InitialMovement(ValidMovement()),
+            ),
+          ),
+        ]),
+  "queen": [
+    ...straight,
+    ...diagonal,
+  ].map((e) => StandardMovement(Vector2(e.x, e.y))).toList(),
   "rook": straight.map((e) => StandardMovement(Vector2(e.x, e.y))).toList(),
   "bishop": diagonal.map((e) => StandardMovement(Vector2(e.x, e.y))).toList(),
-  "knight":
-      knight.map((e) => StandardMovement(Vector2(e.x, e.y), limit: 1)).toList(),
-  "pawn": forward
-      .map<ChessMovement>((e) => Promotion(
-          PeacefulMovement(StandardMovement(Vector2(e.x, e.y), limit: 1)),
-          "queen"))
-      .toList()
-    ..addAll([...forwardLeft, ...forwardRight].map((e) => Promotion(
-        PeacefulMovement(EnPassant(
-            StandardMovement(Vector2(e.x, e.y), limit: 1),
-            otherType: "pawn")),
-        "queen")))
-    ..addAll([...forwardLeft, ...forwardRight].map((e) => Promotion(
-        AttackMovement(StandardMovement(Vector2(e.x, e.y), limit: 1)),
-        "queen")))
-    ..addAll(forward.map((e) => Promotion(
-        InitialMovement(
-            PeacefulMovement(StandardMovement(Vector2(e.x, e.y), limit: 2))),
-        "queen")))
+  "knight": knight
+      .map((e) => StandardMovement(Vector2(e.x, e.y), limit: 1))
+      .toList(),
+  "pawn":
+      forward
+          .map<ChessMovement>(
+            (e) => Promotion(
+              PeacefulMovement(StandardMovement(Vector2(e.x, e.y), limit: 1)),
+              "queen",
+            ),
+          )
+          .toList()
+        ..addAll(
+          [...forwardLeft, ...forwardRight].map(
+            (e) => Promotion(
+              PeacefulMovement(
+                EnPassant(
+                  StandardMovement(Vector2(e.x, e.y), limit: 1),
+                  otherType: "pawn",
+                ),
+              ),
+              "queen",
+            ),
+          ),
+        )
+        ..addAll(
+          [...forwardLeft, ...forwardRight].map(
+            (e) => Promotion(
+              AttackMovement(StandardMovement(Vector2(e.x, e.y), limit: 1)),
+              "queen",
+            ),
+          ),
+        )
+        ..addAll(
+          forward.map(
+            (e) => Promotion(
+              InitialMovement(
+                PeacefulMovement(StandardMovement(Vector2(e.x, e.y), limit: 2)),
+              ),
+              "queen",
+            ),
+          ),
+        ),
 };

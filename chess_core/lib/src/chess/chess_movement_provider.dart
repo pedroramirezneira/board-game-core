@@ -14,11 +14,14 @@ class ChessMovementProvider
     implements MovementProvider<Vector2, Piece, Vector2> {
   final Map<String, List<ChessMovement>> _movements;
   ChessMovementProvider([Map<String, List<ChessMovement>>? movements])
-      : _movements = movements ?? defaultMovements;
+    : _movements = movements ?? defaultMovements;
 
   @override
   Result<Board<Vector2, Piece, Vector2>, MovementProviderError> execute(
-      Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
+    Game<Vector2, Piece, Vector2> game,
+    Vector2 from,
+    Vector2 to,
+  ) {
     final board = game.board;
     final origin = board.get(from);
     final destination = board.get(to);
@@ -34,17 +37,14 @@ class ChessMovementProvider
         ? pieceMovements
         : pieceMovements?.map((movement) => movement.rotate180()).toList();
     Board<Vector2, Piece, Vector2>? cachedResult;
-    final movement = playerMovements?.firstWhere(
-      (movement) {
-        final result = movement.execute(game, from, to);
-        if (result != null) {
-          cachedResult = result;
-          return true;
-        }
-        return false;
-      },
-      orElse: () => _nullMovement,
-    );
+    final movement = playerMovements?.firstWhere((movement) {
+      final result = movement.execute(game, from, to);
+      if (result != null) {
+        cachedResult = result;
+        return true;
+      }
+      return false;
+    }, orElse: () => _nullMovement);
     if (movement == null ||
         identical(movement, _nullMovement) ||
         cachedResult == null) {

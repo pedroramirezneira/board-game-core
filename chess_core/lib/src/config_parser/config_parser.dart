@@ -11,9 +11,8 @@ class ConfigParser {
     if (board is Err) {
       return Err(board.unwrapErr());
     }
-    return Ok(game.copyWith(
-      board: board.unwrap(),
-      movementProvider: provider.unwrap(),
-    ));
+    return Ok(
+      game.copyWith(board: board.unwrap(), movementProvider: provider.unwrap()),
+    );
   }
 }

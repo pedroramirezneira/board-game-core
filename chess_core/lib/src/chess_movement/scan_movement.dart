@@ -12,18 +12,20 @@ class ScanMovement implements ChessMovement {
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) =>
-      switch (game.board.get(from)) {
-        Err() => null,
-        Ok(value: null) => execute(game, from + vector, to),
-        Ok(value: Piece()) => switch (
-              game.movementProvider.execute(game, from, to)) {
-            Err() => null,
-            Ok(value: final board) when onPieceFound == null => board,
-            Ok(value: final board) =>
-              onPieceFound!.execute(game, from, to) == null ? null : board,
-          }
-      };
+  ) => switch (game.board.get(from)) {
+    Err() => null,
+    Ok(value: null) => execute(game, from + vector, to),
+    Ok(value: Piece()) => switch (game.movementProvider.execute(
+      game,
+      from,
+      to,
+    )) {
+      Err() => null,
+      Ok(value: final board) when onPieceFound == null => board,
+      Ok(value: final board) =>
+        onPieceFound!.execute(game, from, to) == null ? null : board,
+    },
+  };
 
   @override
   ChessMovement rotate180() =>

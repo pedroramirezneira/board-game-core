@@ -36,7 +36,7 @@ final defaultConfig = {
       "5 7": "black bishop",
       "6 7": "black knight",
       "7 7": "black rook",
-    }
+    },
   },
   "movements": null,
   "pieces": null,

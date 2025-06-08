@@ -41,16 +41,16 @@ class Castling implements ChessMovement {
               board.get(to - vector).unwrap()?.type != otherType =>
         null,
       Board<Vector2, Piece, Vector2> board => switch (board.put(to, piece!)) {
-          Err() => null,
-          Ok(value: final board) => board,
-        }
+        Err() => null,
+        Ok(value: final board) => board,
+      },
     };
   }
 
   @override
   ChessMovement rotate180() => Castling(
-        movement.rotate180(),
-        otherType: otherType,
-        onPieceFound: onPieceFound?.rotate180(),
-      );
+    movement.rotate180(),
+    otherType: otherType,
+    onPieceFound: onPieceFound?.rotate180(),
+  );
 }

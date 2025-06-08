@@ -13,7 +13,7 @@ final Map<Vector2, Piece?> defaultChessBoard = {
       else if (y == 7)
         Vector2(x, y): Piece(type: _firstRow[x]!, color: "black")
       else
-        Vector2(x, y): null
+        Vector2(x, y): null,
 };
 
 const _firstRow = {

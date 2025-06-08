@@ -2,10 +2,7 @@ class PieceConfig {
   final String type;
   final List<String> movements;
 
-  const PieceConfig({
-    required this.type,
-    required this.movements,
-  });
+  const PieceConfig({required this.type, required this.movements});
 
   @override
   bool operator ==(Object other) {
@@ -22,16 +19,10 @@ class PieceConfig {
 
   factory PieceConfig.fromJson(Map<String, dynamic> json) {
     final movements = json['movements'] as List<dynamic>;
-    return PieceConfig(
-      type: json['type'],
-      movements: movements.cast(),
-    );
+    return PieceConfig(type: json['type'], movements: movements.cast());
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'movements': movements,
-    };
+    return {'type': type, 'movements': movements};
   }
 }

@@ -23,11 +23,12 @@ class Promotion implements ChessMovement {
     }
     return switch (movement.execute(game, from, to)) {
       null => null,
-      _ => game.board
-          .remove(from)
-          .unwrap()
-          .put(to, Piece(type: pieceType, color: game.currentPlayer))
-          .unwrap(),
+      _ =>
+        game.board
+            .remove(from)
+            .unwrap()
+            .put(to, Piece(type: pieceType, color: game.currentPlayer))
+            .unwrap(),
     };
   }
 

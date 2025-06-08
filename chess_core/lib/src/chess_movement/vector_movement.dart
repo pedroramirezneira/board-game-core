@@ -12,15 +12,14 @@ class VectorMovement implements ChessMovement {
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) =>
-      switch ((to - from) / vector) {
-        null => null,
-        int lambda when limit != null && lambda > limit! => null,
-        int() => switch (game.board.move(from, to)) {
-            Err() => null,
-            Ok(value: final board) => board,
-          }
-      };
+  ) => switch ((to - from) / vector) {
+    null => null,
+    int lambda when limit != null && lambda > limit! => null,
+    int() => switch (game.board.move(from, to)) {
+      Err() => null,
+      Ok(value: final board) => board,
+    },
+  };
 
   @override
   ChessMovement rotate180() => VectorMovement(-vector, limit: limit);

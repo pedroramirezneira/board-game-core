@@ -8,10 +8,7 @@ class BoardParser {
     }
     final board = Board(
       initial: arrangement,
-      size: Vector2(
-        config.board.width,
-        config.board.height,
-      ),
+      size: Vector2(config.board.width, config.board.height),
       toString: (board) {
         final buffer = StringBuffer();
         for (int i = 0; i < 8; i++) {
@@ -43,10 +40,7 @@ class BoardParser {
         final value = config.arrangement[key]!;
         final color = value.split(" ")[0];
         final type = value.split(" ")[1];
-        map[Vector2(j, i)] = Piece(
-          type: type,
-          color: color,
-        );
+        map[Vector2(j, i)] = Piece(type: type, color: color);
       }
     }
     return map;

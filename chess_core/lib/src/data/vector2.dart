@@ -1,4 +1,4 @@
-class Vector2 {
+class Vector2 implements Comparable<Vector2> {
   final int x;
   final int y;
 
@@ -40,15 +40,15 @@ class Vector2 {
       (0, _) => Vector2(0, y.sign),
       (_, 0) => Vector2(x.sign, 0),
       (_, _) => () {
-          var a = x.abs();
-          var b = y.abs();
-          while (b != 0) {
-            final temp = b;
-            b = a % b;
-            a = temp;
-          }
-          return Vector2(x ~/ a, y ~/ a);
-        }()
+        var a = x.abs();
+        var b = y.abs();
+        while (b != 0) {
+          final temp = b;
+          b = a % b;
+          a = temp;
+        }
+        return Vector2(x ~/ a, y ~/ a);
+      }(),
     };
   }
 
@@ -66,5 +66,13 @@ class Vector2 {
   @override
   String toString() {
     return "Vector2(x: $x, y: $y)";
+  }
+
+  @override
+  int compareTo(Vector2 other) {
+    if (x != other.x) {
+      return x.compareTo(other.x);
+    }
+    return y.compareTo(other.y);
   }
 }

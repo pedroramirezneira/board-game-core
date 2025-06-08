@@ -33,10 +33,6 @@ class BoardConfig {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'height': height,
-      'width': width,
-      'arrangement': arrangement,
-    };
+    return {'height': height, 'width': width, 'arrangement': arrangement};
   }
 }

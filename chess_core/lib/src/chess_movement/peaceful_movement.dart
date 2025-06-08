@@ -15,7 +15,10 @@ class PeacefulMovement implements ChessMovement {
 
   @override
   Board<Vector2, Piece, Vector2>? execute(
-      Game<Vector2, Piece, Vector2> game, Vector2 from, Vector2 to) {
+    Game<Vector2, Piece, Vector2> game,
+    Vector2 from,
+    Vector2 to,
+  ) {
     final piece = game.board.get(to);
     if (piece is Err || piece.unwrap() != null) {
       return null;

@@ -3,7 +3,8 @@ import 'package:chess_core/src/data/vector2.dart';
 import 'package:board_game_core/board_game_core.dart';
 
 List<Pair<Vector2, Vector2>> generateLegalMoves(
-    Game<Vector2, Piece, Vector2> game) {
+  Game<Vector2, Piece, Vector2> game,
+) {
   final moves = <Pair<Vector2, Vector2>>[];
   final squares = <Vector2>[];
   final iterator = game.board.getAll();

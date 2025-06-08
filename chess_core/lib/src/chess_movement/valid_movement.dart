@@ -7,8 +7,7 @@ class ValidMovement implements ChessMovement {
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) =>
-      game.board;
+  ) => game.board;
 
   @override
   ChessMovement rotate180() => ValidMovement();
