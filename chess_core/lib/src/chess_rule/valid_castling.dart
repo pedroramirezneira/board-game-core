@@ -31,17 +31,18 @@ class ValidCastling implements ChessRule {
       return false;
     }
     final castlingPosition = to - vector;
-    final castlingPiece = game.board.get(castlingPosition);
-    if (castlingPiece is Err) {
+    final castlingResult = game.board.get(castlingPosition);
+    if (castlingResult is Err) {
+      return false;
+    }
+    final castlingPiece = castlingResult.unwrap();
+    if (castlingPiece == null) {
       return false;
     }
     if (identical(
-      castlingPiece.unwrap(),
+      castlingPiece,
       previousState.board.get(castlingPosition).unwrap(),
     )) {
-      return false;
-    }
-    if (identical(previousState.board.get(castlingPosition).unwrap(), piece)) {
       return false;
     }
     final check = Check(pieceType);
