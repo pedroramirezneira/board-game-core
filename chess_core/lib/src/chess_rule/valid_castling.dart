@@ -30,10 +30,24 @@ class ValidCastling implements ChessRule {
     if (lambda == null) {
       return false;
     }
+    final castlingPosition = to - vector;
+    final castlingPiece = game.board.get(castlingPosition);
+    if (castlingPiece is Err) {
+      return false;
+    }
+    if (identical(
+      castlingPiece.unwrap(),
+      previousState.board.get(castlingPosition).unwrap(),
+    )) {
+      return false;
+    }
+    if (identical(previousState.board.get(castlingPosition).unwrap(), piece)) {
+      return false;
+    }
     final check = Check(pieceType);
-    for (var i = 1; i < lambda; i++) {
+    for (var i = 0; i < lambda; i++) {
       final next = from + vector * i;
-      final step = game.board.move(from, next);
+      final step = previousState.board.move(from, next);
       if (step is Err) {
         return false;
       }

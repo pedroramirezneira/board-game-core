@@ -16,7 +16,7 @@ import 'package:chess_core/src/chess_rule/get_last_moved_piece.dart';
   final (movedVector, movedPiece) = lastMovedPiece;
   final iterable = Iterable.withIterator(() => previousState.board.getAll());
   for (final Pair(first: vector, second: piece) in iterable) {
-    if (piece != movedPiece) {
+    if (!identical(piece, movedPiece)) {
       continue;
     }
     return (vector, movedVector, movedPiece);
