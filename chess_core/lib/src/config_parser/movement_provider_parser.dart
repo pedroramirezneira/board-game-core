@@ -7,6 +7,7 @@ import 'package:chess_core/src/chess_movement/initial_movement.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
 import 'package:chess_core/src/chess_movement/promotion.dart';
 import 'package:chess_core/src/chess_movement/standard_movement.dart';
+import 'package:chess_core/src/chess_movement/vector_movement.dart';
 import 'package:chess_core/src/util/default_movements.dart';
 
 class MovementProviderParser {
@@ -45,9 +46,13 @@ class MovementProviderParser {
     for (final item in config) {
       if (defaultMovements.containsKey(item.name)) return null;
       final vectors = item.vectors.map((e) => Vector2(e[0], e[1]));
-      Iterable<ChessMovement> movements = vectors.map(
-        (v) => StandardMovement(v, limit: item.limit),
-      );
+      Iterable<ChessMovement> movements = switch (item.modifiers?.contains(
+        "ghost",
+      )) {
+        true => vectors.map((v) => VectorMovement(v, limit: item.limit)),
+        false => vectors.map((v) => StandardMovement(v, limit: item.limit)),
+        null => vectors.map((v) => StandardMovement(v, limit: item.limit)),
+      };
       for (final modifier in item.modifiers ?? <String>[]) {
         final result = switch (modifier.split("(")[0]) {
           "attack" => movements = movements.map((m) => AttackMovement(m)),
@@ -65,7 +70,8 @@ class MovementProviderParser {
               },
             ),
           ),
-          _ => null,
+          "ghost" => movements,
+          String() => null,
         };
         if (result == null) return null;
       }
