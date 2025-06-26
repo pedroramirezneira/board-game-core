@@ -3,7 +3,9 @@ import 'package:chess_core/src/chess/chess_movement_provider.dart';
 import 'package:chess_core/src/chess_movement/attack_movement.dart';
 import 'package:chess_core/src/chess_movement/castling.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
+import 'package:chess_core/src/chess_movement/explosive_movement.dart';
 import 'package:chess_core/src/chess_movement/initial_movement.dart';
+import 'package:chess_core/src/chess_movement/kamikaze.dart';
 import 'package:chess_core/src/chess_movement/peaceful_movement.dart';
 import 'package:chess_core/src/chess_movement/promotion.dart';
 import 'package:chess_core/src/chess_movement/standard_movement.dart';
@@ -71,6 +73,13 @@ class MovementProviderParser {
             ),
           ),
           "ghost" => movements,
+          "explosive" => movements = movements.map(
+            (m) => ExplosiveMovement(
+              m,
+              int.parse(modifier.split("(")[1].replaceAll(")", "")),
+            ),
+          ),
+          "kamikaze" => movements = movements.map((m) => Kamikaze(m)),
           String() => null,
         };
         if (result == null) return null;
