@@ -11,7 +11,7 @@ import 'package:chess_core/src/data/vector2.dart';
     return null;
   }
   final iterable = Iterable.withIterator(() => game.board.getAll());
-  for (final Pair(first: vector, second: piece) in iterable) {
+  for (final (vector, piece) in iterable) {
     if (piece == null || (pieceType != null && piece.type != pieceType)) {
       continue;
     }

@@ -4,16 +4,16 @@ import 'package:board_game_core/board_game_core.dart';
 import 'package:chess_core/src/ai/evaluator.dart';
 import 'package:chess_core/src/ai/move_generator.dart';
 
-Pair<Vector2, Vector2>? chooseBestMove(
+(Vector2, Vector2)? chooseBestMove(
   Game<Vector2, Piece, Vector2> game,
   int depth,
 ) {
   final maximizingPlayer = game.currentPlayer == 'white';
   int bestScore = maximizingPlayer ? -999999 : 999999;
-  Pair<Vector2, Vector2>? bestMove;
+  (Vector2, Vector2)? bestMove;
 
   for (final move in generateLegalMoves(game)) {
-    final result = game.movementProvider.execute(game, move.first, move.second);
+    final result = game.movementProvider.execute(game, move.$1, move.$2);
     if (result is Err) continue;
 
     final newGame = game.copyWith(
@@ -58,11 +58,7 @@ int alphaBeta(
   if (maximizingPlayer) {
     int maxEval = -999999;
     for (final move in moves) {
-      final result = game.movementProvider.execute(
-        game,
-        move.first,
-        move.second,
-      );
+      final result = game.movementProvider.execute(game, move.$1, move.$2);
       if (result is Err) continue;
 
       final newGame = game.copyWith(
@@ -80,11 +76,7 @@ int alphaBeta(
   } else {
     int minEval = 999999;
     for (final move in moves) {
-      final result = game.movementProvider.execute(
-        game,
-        move.first,
-        move.second,
-      );
+      final result = game.movementProvider.execute(game, move.$1, move.$2);
       if (result is Err) continue;
 
       final newGame = game.copyWith(

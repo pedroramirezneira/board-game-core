@@ -18,8 +18,7 @@ class Stalemate implements ChessEndCondition {
     final iterator = state.board.getAll();
     while (iterator.moveNext()) {
       final entry = iterator.current;
-      final position = entry.first;
-      final piece = entry.second;
+      final (position, piece) = entry;
       toSquares.add(position);
       if (piece != null && piece.color == state.currentPlayer) {
         fromSquares.add(position);

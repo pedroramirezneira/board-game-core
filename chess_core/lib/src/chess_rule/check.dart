@@ -21,7 +21,7 @@ class Check implements ChessRule {
     final state = game.copyWith(currentPlayer: nextPlayer, previousState: game);
     final iterator = state.board.getAll();
     while (iterator.moveNext() != false) {
-      final from = iterator.current.first;
+      final from = iterator.current.$1;
       if (isMyPiece(from, game, pieceType)) {
         pieceCount++;
       }
@@ -30,7 +30,7 @@ class Check implements ChessRule {
         if (pieceCount > 1) {
           return false;
         }
-        final (to) = iterator2.current.first;
+        final to = iterator2.current.$1;
         if (handleMove(from, to, state, pieceType)) {
           isInCheck = true;
         }

@@ -10,21 +10,21 @@ void main() {
   print(chess.board);
   print("");
   final aiMove1 = chooseBestMove(chess, 2)!;
-  chess = chess.move(aiMove1.first, aiMove1.second).unwrap();
+  chess = chess.move(aiMove1.$1, aiMove1.$2).unwrap();
   print(chess.board);
   print("");
   chess = chess.move(Vector2(3, 1), Vector2(3, 2)).unwrap();
   print(chess.board);
   print("");
   final aiMove2 = chooseBestMove(chess, 2)!;
-  chess = chess.move(aiMove2.first, aiMove2.second).unwrap();
+  chess = chess.move(aiMove2.$1, aiMove2.$2).unwrap();
   print(chess.board);
   print("");
   chess = chess.move(Vector2(6, 0), Vector2(5, 2)).unwrap();
   print(chess.board);
   print("");
   final aiMove3 = chooseBestMove(chess, 2)!;
-  chess = chess.move(aiMove3.first, aiMove3.second).unwrap();
+  chess = chess.move(aiMove3.$1, aiMove3.$2).unwrap();
   print(chess.board);
   print("");
   if (chess is EndedGame) {

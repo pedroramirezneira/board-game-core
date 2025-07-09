@@ -16,7 +16,7 @@ int evaluate(Game<Vector2, Piece, Vector2> game) {
   };
 
   while (iterator.moveNext()) {
-    final piece = iterator.current.second;
+    final piece = iterator.current.$2;
     if (piece == null) continue;
 
     final value = values[piece.type] ?? 0;

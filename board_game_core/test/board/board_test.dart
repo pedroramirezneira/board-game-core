@@ -34,12 +34,12 @@ void main() {
       final second = iterator.current;
       iterator.moveNext();
       final third = iterator.current;
-      expect(first.first, "a");
-      expect(first.second, 1);
-      expect(second.first, "b");
-      expect(second.second, 2);
-      expect(third.first, "c");
-      expect(third.second, 3);
+      expect(first.$1, "a");
+      expect(first.$2, 1);
+      expect(second.$1, "b");
+      expect(second.$2, 2);
+      expect(third.$1, "c");
+      expect(third.$2, 3);
     });
 
     test('Invalid move', () {

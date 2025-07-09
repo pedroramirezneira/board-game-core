@@ -1,5 +1,4 @@
 import 'package:board_game_core/src/board/board_error.dart';
-import 'package:board_game_core/src/util/pair.dart';
 import 'package:board_game_core/src/result/result.dart';
 
 const _invalidMovementError =
@@ -40,8 +39,8 @@ class Board<K, V, S> {
     return Ok(_map[key]);
   }
 
-  Iterator<Pair<K, V?>> getAll() {
-    return _map.entries.map((e) => Pair(e.key, e.value)).iterator;
+  Iterator<(K, V?)> getAll() {
+    return _map.entries.map((e) => (e.key, e.value)).iterator;
   }
 
   Result<Board<K, V, S>, BoardError> remove(K position) {

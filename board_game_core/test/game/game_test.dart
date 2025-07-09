@@ -49,12 +49,12 @@ void main() {
       final second = iterator.current;
       iterator.moveNext();
       final third = iterator.current;
-      expect(first.first, "a");
-      expect(first.second, "x");
-      expect(second.first, "b");
-      expect(second.second, "y");
-      expect(third.first, "c");
-      expect(third.second, "z");
+      expect(first.$1, "a");
+      expect(first.$2, "x");
+      expect(second.$1, "b");
+      expect(second.$2, "y");
+      expect(third.$1, "c");
+      expect(third.$2, "z");
     });
 
     test('Invalid move', () {
