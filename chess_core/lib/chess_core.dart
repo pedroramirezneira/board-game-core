@@ -17,3 +17,4 @@ export 'src/config_parser/board_parser.dart';
 export 'src/config_parser/movement_provider_parser.dart';
 export 'package:board_game_core/board_game_core.dart';
 export 'src/ai/alpha_beta.dart';
+export 'src/data/promotion_event.dart';
