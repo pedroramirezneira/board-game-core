@@ -21,14 +21,19 @@ class Promotion implements ChessMovement {
     if (!isValid) {
       return movement.execute(game, from, to);
     }
-    final pieceType = await game.input(PromotionEvent());
     return switch (await movement.execute(game, from, to)) {
       null => null,
       _ =>
         game.board
             .remove(from)
             .unwrap()
-            .put(to, Piece(type: pieceType, color: game.currentPlayer))
+            .put(
+              to,
+              Piece(
+                type: await game.input(PromotionEvent()),
+                color: game.currentPlayer,
+              ),
+            )
             .unwrap(),
     };
   }
