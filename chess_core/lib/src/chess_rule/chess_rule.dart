@@ -3,5 +3,5 @@ import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 
 abstract class ChessRule implements RuleViolation {
-  bool validate(Game<Vector2, Piece, Vector2> game);
+  Future<bool> validate(Game<Vector2, Piece, Vector2> game);
 }

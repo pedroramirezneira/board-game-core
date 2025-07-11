@@ -11,11 +11,11 @@ class Checkmate implements ChessEndCondition {
   const Checkmate(this.pieceType);
 
   @override
-  bool validate(Game<Vector2, Piece, Vector2> game) {
+  Future<bool> validate(Game<Vector2, Piece, Vector2> game) async {
     final nextPlayer = game.turnManager.getNextPlayer(game);
     final state = game.copyWith(currentPlayer: nextPlayer, previousState: game);
-    return Check(pieceType).validate(state) &&
-        Stalemate(pieceType).validate(game);
+    return await Check(pieceType).validate(state) &&
+        await Stalemate(pieceType).validate(game);
   }
 
   @override

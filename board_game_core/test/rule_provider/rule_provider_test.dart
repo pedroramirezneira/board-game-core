@@ -5,7 +5,7 @@ import '../game/game_test.dart';
 class _MyProvider implements RuleProvider<String, int, int> {
   const _MyProvider();
   @override
-  RuleViolation? validate(Game<String, int, int> game) {
+  Future<RuleViolation?> validate(Game<String, int, int> game) async {
     if (game.currentPlayer == "black") {
       return RuleViolation("Invalid player");
     }
@@ -17,14 +17,14 @@ const testRuleProvider = _MyProvider();
 
 void main() {
   group('Rule provider tests', () {
-    test('Valid game', () {
-      final result = testRuleProvider.validate(testGame);
+    test('Valid game', () async {
+      final result = await testRuleProvider.validate(testGame);
       expect(result, null);
     });
 
-    test('Invalid game', () {
+    test('Invalid game', () async {
       final game = testGame.copyWith(currentPlayer: "black");
-      final result = testRuleProvider.validate(game);
+      final result = await testRuleProvider.validate(game);
       expect(result.runtimeType, RuleViolation);
     });
   });

@@ -7,9 +7,9 @@ class ChessRuleProvider implements RuleProvider<Vector2, Piece, Vector2> {
   const ChessRuleProvider();
 
   @override
-  RuleViolation? validate(Game<Vector2, Piece, Vector2> game) {
+  Future<RuleViolation?> validate(Game<Vector2, Piece, Vector2> game) async {
     for (final rule in defaultRules) {
-      final result = rule.validate(game);
+      final result = await rule.validate(game);
       if (result) {
         return rule;
       }

@@ -7,7 +7,7 @@ import '../movement_provider/movement_provider_test.dart';
 import '../rule_provider/rule_provider_test.dart';
 import '../turn_manager/turn_manager_test.dart';
 
-const testGame = Game(
+final testGame = Game(
   currentPlayer: "white",
   board: testBoard,
   movementProvider: testMovementProvider,
@@ -15,6 +15,7 @@ const testGame = Game(
   endProvider: testEndProvider,
   turnManager: testTurnManager,
   previousState: null,
+  input: (event) async => "",
 );
 
 void main() {
@@ -73,8 +74,8 @@ void main() {
       expect(newBoard.runtimeType, Err<Board<String, String, int>, BoardError>);
     });
 
-    test("Previous state test", () {
-      final state = testGame.move("a", "b").unwrap();
+    test("Previous state test", () async {
+      final state = (await testGame.move("a", "b")).unwrap();
       expect(state.previousState, testGame);
       expect(state.previousState?.previousState, isNull);
     });

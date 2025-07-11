@@ -8,11 +8,11 @@ class VectorMovement implements ChessMovement {
   const VectorMovement(this.vector, {this.limit});
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) => switch ((to - from) / vector) {
+  ) async => switch ((to - from) / vector) {
     null => null,
     int lambda when limit != null && lambda > limit! => null,
     int() => switch (game.board.move(from, to)) {

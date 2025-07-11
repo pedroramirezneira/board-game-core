@@ -9,11 +9,11 @@ class BlockedMovement implements ChessMovement {
   const BlockedMovement(this.movement);
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) {
+  ) async {
     final delta = to - from;
     final vector = delta.normalize();
     final lambda = delta / vector;

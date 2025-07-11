@@ -10,12 +10,12 @@ class EnPassant implements ChessMovement {
   const EnPassant(this.movement, {this.otherType});
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) {
-    if (movement.execute(game, from, to) == null) {
+  ) async {
+    if (await movement.execute(game, from, to) == null) {
       return null;
     }
     final vector = (to - from).normalize();

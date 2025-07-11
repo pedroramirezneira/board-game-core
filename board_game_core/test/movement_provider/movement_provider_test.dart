@@ -7,11 +7,11 @@ import '../game/game_test.dart';
 class _MyProvider implements MovementProvider<String, int, int> {
   const _MyProvider();
   @override
-  Result<Board<String, int, int>, MovementProviderError> execute(
+  Future<Result<Board<String, int, int>, MovementProviderError>> execute(
     Game<String, int, int> game,
     String from,
     String to,
-  ) {
+  ) async {
     if (from == "b" && to == "c") {
       return Err(MovementProviderError("Invalid move"));
     }
@@ -27,21 +27,21 @@ const testMovementProvider = _MyProvider();
 
 void main() {
   group('Movement provider tests', () {
-    test('Valid move', () {
-      final result = testMovementProvider.execute(testGame, "a", "b");
+    test('Valid move', () async {
+      final result = await testMovementProvider.execute(testGame, "a", "b");
       expect(result.unwrap().get("a").unwrap(), null);
       expect(result.unwrap().get("b").unwrap(), 1);
     });
 
-    test('Invalid move', () {
-      final result = testMovementProvider.execute(testGame, "b", "c");
+    test('Invalid move', () async {
+      final result = await testMovementProvider.execute(testGame, "b", "c");
       expect(result.runtimeType,
           Err<Board<String, int, int>, MovementProviderError>);
       expect(testBoard.get("b").unwrap(), 2);
     });
 
-    test('Invalid key', () {
-      final result = testMovementProvider.execute(testGame, "d", "c");
+    test('Invalid key', () async {
+      final result = await testMovementProvider.execute(testGame, "d", "c");
       expect(result.runtimeType,
           Err<Board<String, int, int>, MovementProviderError>);
     });

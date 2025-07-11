@@ -7,11 +7,11 @@ class Kamikaze implements ChessMovement {
   const Kamikaze(this.movement);
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) => switch (movement.execute(game, from, to)) {
+  ) async => switch (await movement.execute(game, from, to)) {
     null => null,
     Board<Vector2, Piece, Vector2> board => board.remove(to).unwrap(),
   };

@@ -47,7 +47,6 @@ final Map<String, List<ChessMovement>> defaultMovements = {
           .map<ChessMovement>(
             (e) => Promotion(
               PeacefulMovement(StandardMovement(Vector2(e.x, e.y), limit: 1)),
-              "queen",
             ),
           )
           .toList()
@@ -60,7 +59,6 @@ final Map<String, List<ChessMovement>> defaultMovements = {
                   otherType: "pawn",
                 ),
               ),
-              "queen",
             ),
           ),
         )
@@ -68,7 +66,6 @@ final Map<String, List<ChessMovement>> defaultMovements = {
           [...forwardLeft, ...forwardRight].map(
             (e) => Promotion(
               AttackMovement(StandardMovement(Vector2(e.x, e.y), limit: 1)),
-              "queen",
             ),
           ),
         )
@@ -78,7 +75,6 @@ final Map<String, List<ChessMovement>> defaultMovements = {
               InitialMovement(
                 PeacefulMovement(StandardMovement(Vector2(e.x, e.y), limit: 2)),
               ),
-              "queen",
             ),
           ),
         ),

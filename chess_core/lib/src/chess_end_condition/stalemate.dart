@@ -10,7 +10,7 @@ class Stalemate implements ChessEndCondition {
   const Stalemate(this.pieceType);
 
   @override
-  bool validate(Game<Vector2, Piece, Vector2> game) {
+  Future<bool> validate(Game<Vector2, Piece, Vector2> game) async {
     final nextPlayer = game.turnManager.getNextPlayer(game);
     final state = game.copyWith(currentPlayer: nextPlayer, previousState: game);
     final fromSquares = <Vector2>[];
@@ -26,13 +26,13 @@ class Stalemate implements ChessEndCondition {
     }
     for (final from in fromSquares) {
       for (final to in toSquares) {
-        final result = state.movementProvider.execute(state, from, to);
+        final result = await state.movementProvider.execute(state, from, to);
         if (result is Ok) {
           final nextState = state.copyWith(
             board: result.unwrap(),
             previousState: state,
           );
-          if (!Check(pieceType).validate(nextState)) {
+          if (!await Check(pieceType).validate(nextState)) {
             return false;
           }
         }

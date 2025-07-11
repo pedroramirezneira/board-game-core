@@ -16,5 +16,5 @@ const _json = {
 };
 
 final validCastlingConfig = ConfigParser()
-    .parse(ChessConfig.fromJson(_json))
+    .parse(ChessConfig.fromJson(_json), (event) async => "")
     .unwrap();

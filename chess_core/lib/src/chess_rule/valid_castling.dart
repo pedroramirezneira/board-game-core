@@ -14,7 +14,7 @@ class ValidCastling implements ChessRule {
   String get message => "Castling is not valid";
 
   @override
-  bool validate(Game<Vector2, Piece, Vector2> game) {
+  Future<bool> validate(Game<Vector2, Piece, Vector2> game) async {
     final previousState = game.previousState;
     if (previousState == null) {
       return false;
@@ -56,7 +56,7 @@ class ValidCastling implements ChessRule {
         board: step.unwrap(),
         previousState: previousState,
       );
-      final isValid = check.validate(newGame);
+      final isValid = await check.validate(newGame);
       if (isValid) {
         return true;
       }

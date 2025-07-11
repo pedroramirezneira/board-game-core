@@ -3,28 +3,28 @@ import 'package:chess_core/src/chess/default_chess.dart';
 import 'package:chess_core/src/data/vector2.dart';
 import 'package:chess_core/src/ai/alpha_beta.dart';
 
-void main() {
+void main() async {
   final time = DateTime.now();
-  var chess = defaultChess();
-  chess = chess.move(Vector2(4, 1), Vector2(4, 3)).unwrap();
+  var chess = defaultChess((event) async => "");
+  chess = (await chess.move(Vector2(4, 1), Vector2(4, 3))).unwrap();
   print(chess.board);
   print("");
-  final aiMove1 = chooseBestMove(chess, 2)!;
-  chess = chess.move(aiMove1.$1, aiMove1.$2).unwrap();
+  final aiMove1 = await chooseBestMove(chess, 2);
+  chess = (await chess.move(aiMove1!.$1, aiMove1.$2)).unwrap();
   print(chess.board);
   print("");
-  chess = chess.move(Vector2(3, 1), Vector2(3, 2)).unwrap();
+  chess = (await chess.move(Vector2(3, 1), Vector2(3, 2))).unwrap();
   print(chess.board);
   print("");
-  final aiMove2 = chooseBestMove(chess, 2)!;
-  chess = chess.move(aiMove2.$1, aiMove2.$2).unwrap();
+  final aiMove2 = await chooseBestMove(chess, 2);
+  chess = (await chess.move(aiMove2!.$1, aiMove2.$2)).unwrap();
   print(chess.board);
   print("");
-  chess = chess.move(Vector2(6, 0), Vector2(5, 2)).unwrap();
+  chess = (await chess.move(Vector2(6, 0), Vector2(5, 2))).unwrap();
   print(chess.board);
   print("");
-  final aiMove3 = chooseBestMove(chess, 2)!;
-  chess = chess.move(aiMove3.$1, aiMove3.$2).unwrap();
+  final aiMove3 = await chooseBestMove(chess, 2);
+  chess = (await chess.move(aiMove3!.$1, aiMove3.$2)).unwrap();
   print(chess.board);
   print("");
   if (chess is EndedGame) {

@@ -1,8 +1,11 @@
 import 'package:chess_core/chess_core.dart';
 
 class ConfigParser {
-  Result<Game<Vector2, Piece, Vector2>, String> parse(ChessConfig config) {
-    final game = defaultChess();
+  Result<Game<Vector2, Piece, Vector2>, String> parse(
+    ChessConfig config,
+    Input input,
+  ) {
+    final game = defaultChess(input);
     final provider = MovementProviderParser().parse(config);
     if (provider is Err) {
       return Err(provider.unwrapErr());

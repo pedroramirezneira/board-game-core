@@ -3,6 +3,7 @@ import 'package:board_game_core/src/end_provider/end_condition.dart';
 import 'package:board_game_core/src/end_provider/end_provider.dart';
 import 'package:board_game_core/src/game/game.dart';
 import 'package:board_game_core/src/game/game_error.dart';
+import 'package:board_game_core/src/input/input.dart';
 import 'package:board_game_core/src/movement_provider/movement_provider.dart';
 import 'package:board_game_core/src/result/result.dart';
 import 'package:board_game_core/src/rule_provider/rule_provider.dart';
@@ -19,6 +20,7 @@ class EndedGame<K, V, S> extends Game<K, V, S> {
     required super.endProvider,
     required super.turnManager,
     required super.previousState,
+    required super.input,
     required this.endCondition,
   });
 
@@ -31,12 +33,13 @@ class EndedGame<K, V, S> extends Game<K, V, S> {
       endProvider: game.endProvider,
       turnManager: game.turnManager,
       previousState: game.previousState,
+      input: game.input,
       endCondition: endCondition,
     );
   }
 
   @override
-  Result<Game<K, V, S>, GameError> move(K from, K to) {
+  Future<Result<Game<K, V, S>, GameError>> move(K from, K to) async {
     return Err(GameError('Game has ended'));
   }
 
@@ -49,6 +52,7 @@ class EndedGame<K, V, S> extends Game<K, V, S> {
     EndProvider<K, V, S>? endProvider,
     TurnManager<K, V, S>? turnManager,
     Game<K, V, S>? previousState,
+    Input? input,
   }) {
     return this;
   }

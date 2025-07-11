@@ -12,11 +12,11 @@ class StandardMovement implements ChessMovement {
   const StandardMovement(this.vector, {this.limit});
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) => BlockedMovement(
+  ) async => BlockedMovement(
     VectorMovement(vector, limit: limit),
   ).execute(game, from, to);
 

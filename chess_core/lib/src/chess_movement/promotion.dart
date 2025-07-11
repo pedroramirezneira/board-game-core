@@ -1,18 +1,18 @@
 import 'package:chess_core/chess_core.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
+import 'package:chess_core/src/data/promotion_event.dart';
 
 class Promotion implements ChessMovement {
   final ChessMovement movement;
-  final String pieceType;
 
-  const Promotion(this.movement, this.pieceType);
+  const Promotion(this.movement);
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) {
+  ) async {
     final isValid = switch (game.currentPlayer) {
       "white" => to.y == game.board.size.y - 1,
       "black" => to.y == 0,
@@ -21,7 +21,8 @@ class Promotion implements ChessMovement {
     if (!isValid) {
       return movement.execute(game, from, to);
     }
-    return switch (movement.execute(game, from, to)) {
+    final pieceType = await game.input(PromotionEvent());
+    return switch (await movement.execute(game, from, to)) {
       null => null,
       _ =>
         game.board
@@ -34,6 +35,6 @@ class Promotion implements ChessMovement {
 
   @override
   ChessMovement rotate180() {
-    return Promotion(movement.rotate180(), pieceType);
+    return Promotion(movement.rotate180());
   }
 }

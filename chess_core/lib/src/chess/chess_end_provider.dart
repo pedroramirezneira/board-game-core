@@ -7,9 +7,9 @@ class ChessEndProvider implements EndProvider<Vector2, Piece, Vector2> {
   const ChessEndProvider();
 
   @override
-  EndCondition? hasEnded(Game<Vector2, Piece, Vector2> game) {
+  Future<EndCondition?> hasEnded(Game<Vector2, Piece, Vector2> game) async {
     for (final condition in defaultEndConditions) {
-      final result = condition.validate(game);
+      final result = await condition.validate(game);
       if (result) {
         return condition;
       }

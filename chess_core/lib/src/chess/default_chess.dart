@@ -27,7 +27,7 @@ final _board = Board(
   },
 );
 
-Game<Vector2, Piece, Vector2> defaultChess() {
+Game<Vector2, Piece, Vector2> defaultChess(Input input) {
   return Game(
     currentPlayer: "white",
     board: _board,
@@ -36,5 +36,6 @@ Game<Vector2, Piece, Vector2> defaultChess() {
     endProvider: const ChessEndProvider(),
     turnManager: const ChessTurnManager(),
     previousState: null,
+    input: input,
   );
 }

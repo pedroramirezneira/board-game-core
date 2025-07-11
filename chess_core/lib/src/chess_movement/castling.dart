@@ -12,13 +12,13 @@ class Castling implements ChessMovement {
   const Castling(this.movement, {this.otherType, this.onPieceFound});
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) {
+  ) async {
     final piece = game.board.get(from).unwrap();
-    if (movement.execute(game, from, to) == null) {
+    if (await movement.execute(game, from, to) == null) {
       return null;
     }
     final vector = (to - from).normalize();
@@ -30,7 +30,7 @@ class Castling implements ChessMovement {
       board: newBoard.unwrap(),
       currentPlayer: game.currentPlayer,
     );
-    final scan = ScanMovement(
+    final scan = await ScanMovement(
       vector,
       onPieceFound: onPieceFound,
     ).execute(newGame, to + vector, to - vector);

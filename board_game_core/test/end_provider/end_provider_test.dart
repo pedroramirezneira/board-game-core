@@ -11,7 +11,7 @@ class _MyProvider implements EndProvider<String, int, int> {
   const _MyProvider();
 
   @override
-  EndCondition? hasEnded(Game<String, int, int> game) {
+  Future<EndCondition?> hasEnded(Game<String, int, int> game) async {
     if (game.currentPlayer == "black") {
       return _WinCondition();
     }
@@ -23,14 +23,14 @@ const testEndProvider = _MyProvider();
 
 void main() {
   group('End provider tests', () {
-    test('Not ended game', () {
-      final result = testEndProvider.hasEnded(testGame);
+    test('Not ended game', () async {
+      final result = await testEndProvider.hasEnded(testGame);
       expect(result, null);
     });
 
-    test('Ended game', () {
+    test('Ended game', () async {
       final game = testGame.copyWith(currentPlayer: "black");
-      final result = testEndProvider.hasEnded(game);
+      final result = await testEndProvider.hasEnded(game);
       expect(result.runtimeType, _WinCondition);
     });
   });

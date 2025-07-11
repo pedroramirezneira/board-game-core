@@ -4,16 +4,16 @@ import 'package:board_game_core/board_game_core.dart';
 import 'package:chess_core/src/ai/evaluator.dart';
 import 'package:chess_core/src/ai/move_generator.dart';
 
-(Vector2, Vector2)? chooseBestMove(
+Future<(Vector2, Vector2)?> chooseBestMove(
   Game<Vector2, Piece, Vector2> game,
   int depth,
-) {
+) async {
   final maximizingPlayer = game.currentPlayer == 'white';
   int bestScore = maximizingPlayer ? -999999 : 999999;
   (Vector2, Vector2)? bestMove;
 
-  for (final move in generateLegalMoves(game)) {
-    final result = game.movementProvider.execute(game, move.$1, move.$2);
+  for (final move in await generateLegalMoves(game)) {
+    final result = await game.movementProvider.execute(game, move.$1, move.$2);
     if (result is Err) continue;
 
     final newGame = game.copyWith(
@@ -22,7 +22,7 @@ import 'package:chess_core/src/ai/move_generator.dart';
       previousState: game,
     );
 
-    final score = alphaBeta(
+    final score = await alphaBeta(
       newGame,
       depth - 1,
       -100000,
@@ -42,23 +42,27 @@ import 'package:chess_core/src/ai/move_generator.dart';
   return bestMove;
 }
 
-int alphaBeta(
+Future<int> alphaBeta(
   Game<Vector2, Piece, Vector2> game,
   int depth,
   int alpha,
   int beta,
   bool maximizingPlayer,
-) {
-  if (depth == 0 || game.endProvider.hasEnded(game) != null) {
+) async {
+  if (depth == 0 || await game.endProvider.hasEnded(game) != null) {
     return evaluate(game);
   }
 
-  final moves = generateLegalMoves(game);
+  final moves = await generateLegalMoves(game);
 
   if (maximizingPlayer) {
     int maxEval = -999999;
     for (final move in moves) {
-      final result = game.movementProvider.execute(game, move.$1, move.$2);
+      final result = await game.movementProvider.execute(
+        game,
+        move.$1,
+        move.$2,
+      );
       if (result is Err) continue;
 
       final newGame = game.copyWith(
@@ -67,7 +71,7 @@ int alphaBeta(
         previousState: game,
       );
 
-      final eval = alphaBeta(newGame, depth - 1, alpha, beta, false);
+      final eval = await alphaBeta(newGame, depth - 1, alpha, beta, false);
       maxEval = maxEval > eval ? maxEval : eval;
       alpha = alpha > eval ? alpha : eval;
       if (beta <= alpha) break;
@@ -76,7 +80,11 @@ int alphaBeta(
   } else {
     int minEval = 999999;
     for (final move in moves) {
-      final result = game.movementProvider.execute(game, move.$1, move.$2);
+      final result = await game.movementProvider.execute(
+        game,
+        move.$1,
+        move.$2,
+      );
       if (result is Err) continue;
 
       final newGame = game.copyWith(
@@ -85,7 +93,7 @@ int alphaBeta(
         previousState: game,
       );
 
-      final eval = alphaBeta(newGame, depth - 1, alpha, beta, true);
+      final eval = await alphaBeta(newGame, depth - 1, alpha, beta, true);
       minEval = minEval < eval ? minEval : eval;
       beta = beta < eval ? beta : eval;
       if (beta <= alpha) break;

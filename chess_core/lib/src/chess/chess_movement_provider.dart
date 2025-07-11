@@ -1,6 +1,5 @@
 import 'package:board_game_core/board_game_core.dart';
 import 'package:chess_core/src/chess_movement/chess_movement.dart';
-import 'package:chess_core/src/chess_movement/standard_movement.dart';
 import 'package:chess_core/src/data/piece.dart';
 import 'package:chess_core/src/data/vector2.dart';
 import 'package:chess_core/src/util/default_movements.dart';
@@ -17,11 +16,11 @@ class ChessMovementProvider
     : _movements = movements ?? defaultMovements;
 
   @override
-  Result<Board<Vector2, Piece, Vector2>, MovementProviderError> execute(
+  Future<Result<Board<Vector2, Piece, Vector2>, MovementProviderError>> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) {
+  ) async {
     final board = game.board;
     final origin = board.get(from);
     final destination = board.get(to);
@@ -37,17 +36,16 @@ class ChessMovementProvider
         ? pieceMovements
         : pieceMovements?.map((movement) => movement.rotate180()).toList();
     Board<Vector2, Piece, Vector2>? cachedResult;
-    final movement = playerMovements?.firstWhere((movement) {
-      final result = movement.execute(game, from, to);
-      if (result != null) {
-        cachedResult = result;
-        return true;
+    await Future(() async {
+      for (final movement in playerMovements ?? <ChessMovement>[]) {
+        final result = await movement.execute(game, from, to);
+        if (result != null) {
+          cachedResult = result;
+          return;
+        }
       }
-      return false;
-    }, orElse: () => _nullMovement);
-    if (movement == null ||
-        identical(movement, _nullMovement) ||
-        cachedResult == null) {
+    });
+    if (cachedResult == null) {
       return Err(MovementProviderError(_invalidMovementError));
     }
     return Ok(cachedResult!);
@@ -60,5 +58,3 @@ class ChessMovementProvider
     return ChessMovementProvider(_movements).._movements[type] = movements;
   }
 }
-
-final _nullMovement = StandardMovement(Vector2(0, 0));

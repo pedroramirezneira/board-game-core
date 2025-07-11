@@ -14,11 +14,11 @@ class InitialMovement implements ChessMovement {
   }
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) {
+  ) async {
     var state = game.previousState;
     final piece = game.board.get(from).unwrap();
     while (state != null) {

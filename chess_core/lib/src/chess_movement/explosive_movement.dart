@@ -8,12 +8,12 @@ class ExplosiveMovement implements ChessMovement {
   const ExplosiveMovement(this.movement, this.radius);
 
   @override
-  Board<Vector2, Piece, Vector2>? execute(
+  Future<Board<Vector2, Piece, Vector2>?> execute(
     Game<Vector2, Piece, Vector2> game,
     Vector2 from,
     Vector2 to,
-  ) {
-    final board = movement.execute(game, from, to);
+  ) async {
+    final board = await movement.execute(game, from, to);
     if (board == null) {
       return null;
     }

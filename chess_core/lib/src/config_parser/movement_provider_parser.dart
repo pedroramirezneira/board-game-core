@@ -60,9 +60,7 @@ class MovementProviderParser {
           "attack" => movements = movements.map((m) => AttackMovement(m)),
           "peaceful" => movements = movements.map((m) => PeacefulMovement(m)),
           "initial" => movements = movements.map((m) => InitialMovement(m)),
-          "promotion" => movements = movements.map(
-            (m) => Promotion(m, modifier.split("(")[1].replaceAll(")", "")),
-          ),
+          "promotion" => movements = movements.map((m) => Promotion(m)),
           "castling" => movements = movements.map(
             (m) => Castling(
               m,

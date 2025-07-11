@@ -14,7 +14,7 @@ class Check implements ChessRule {
   String get message => "The $pieceType is in check";
 
   @override
-  bool validate(Game<Vector2, Piece, Vector2> game) {
+  Future<bool> validate(Game<Vector2, Piece, Vector2> game) async {
     var isInCheck = false;
     var pieceCount = 0;
     final nextPlayer = game.turnManager.getNextPlayer(game);
@@ -31,7 +31,7 @@ class Check implements ChessRule {
           return false;
         }
         final to = iterator2.current.$1;
-        if (handleMove(from, to, state, pieceType)) {
+        if (await handleMove(from, to, state, pieceType)) {
           isInCheck = true;
         }
       }
